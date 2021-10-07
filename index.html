@@ -26,7 +26,7 @@
           </ul>
           <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         </div>
-      </nav>
+    </nav>
       <!--hero section-->
       <div class="section no-pad-bot bg-image overlay" id="index-banner">
         <div class="container">
@@ -53,7 +53,7 @@
                         <div class="input-field inline">
                           <!-- <form id="brewery-form"> -->
                               <!-- <input id="event-search" name="event-search" type="text" class="validate"> -->
-                              <button class="btn waves-effect waves-light" type="submit" name="breweries" onclick="window.location.href='#breweries'">Find Me Something Fun to Do!
+                              <button class="btn waves-effect waves-light" type="submit" name="breweries" onclick="window.location.href='#breweries'">Find Me a Nearby Brewery!
                                   <i class="material-icons right"></i>
                               </button>
                           <!-- </form> -->
@@ -76,9 +76,9 @@
             <div class="col s12 m4">
               <div class="icon-block">
                 
-                    <form id="search-form">
-                        <input id="main-search" name="main-search" type="text" class="validate">
-                        <button class="btn waves-effect waves-light" type="submit">Search by city
+                    <form id="search-form-events">
+                      <input id="searchTerm" name="searchTerm" type="text">
+                      <button class="btn waves-effect waves-light" onclick="loadEventsByCity()">Search by city
                             <i class="material-icons right"></i>
                         </button>
                     </form>
@@ -118,11 +118,14 @@
               </div>
             </div>
             <!--Event Results section-->
-            <div class="col s12">
+            <div class="col s12" >
                 <h4 class="center"><a id="events"></a>Search Results</h4>
                 <div class="col s12 m8">
                     <h5 class="center">Events</h5>
                     <p><em>These will be dynamically generated. Can add classes during generation in for loop</em></p>
+                        <div id="event-response-container">
+                          dynamically loaded content will go here
+                        </div>
                         <div class="col s12 m4">
                             <div class="card">
                                 <div class="card-image">
@@ -194,110 +197,85 @@
           </div>
         </div>
       </div>
-
-              <!--Brewery Results section-->
-              <div class="container">
-                <div class="section">
-                  <!--   Icon Section   -->
-                  <div class="row">
-                    <div class="col s12">
-                        <h3 class="center"><a id="events"></a>Breweries</h5>
-                    </div>
-                    <div class="col s12 m4">
+      <!--Brewery Results section-->
+      <div class="container">
+         <div class="section">
+           <!--   Icon Section   -->
+             <div class="row">
+                <div class="col s12">
+                    <h3 class="center"><a id="breweries"></a>Breweries</h5>
+                </div>
+                <div class="col s12 m4">
                       <div class="icon-block">
-                        
                             <form id="search-form">
-                                <input id="main-search" name="main-search" type="text" class="validate">
-                                <button class="btn waves-effect waves-light" type="submit">Search by city
+                                <input id="searchTerm2" name="searchTerm2" type="text" class="validate">
+                                <button class="btn waves-effect waves-light" type="submit" onclick="loadEventsByCity()">Search by city
                                     <i class="material-icons right"></i>
                                 </button>
                             </form>
-                        <!-- <p class="dark">Should these selections be hidden until they actually input a city?</p>
-                            <div class="show">
-                                <label>Search by Genre</label>
-                                <select class="browser-default">
-                                <option value="" disabled selected>Genre</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                                </select>
-                                <p class="dark">- OR -</p>
-                                <label>Search by Venue</label>
-                                <select class="browser-default">
-                                <option value="" disabled selected>Venue</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                                </select>
-                                <p class="dark">- OR -</p>
-                                <label>Search by Something Else</label>
-                                <select class="browser-default">
-                                <option value="" disabled selected>Other</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                                </select>
-                            </div> -->
                         <p class="dark">I imagine this map won't take up this mnuch space until they actually do a search. This is just a placeholder image to represent spacing.</p>
                       </div>
-                    </div>
-                    <div class="col s12 m8">
+                </div>
+                <div class="col s12 m8">
                       <div class="icon-block">
                         <!-- <h5 class="center">User Experience Focused</h5> -->
                         <p class="light"><img src="https://via.placeholder.com/800x500.png?text=Will+There+Be+A+Map+Here?" /></p>
                       </div>
-                    </div>
-                    <!--Event Results section-->
-                    <div class="col s12 m12">
-                        <!-- <h4 class="center"><a id="breweries"></a>Breweries</h4> -->
-                            <p><em>Displaying these differently since they don't have as much information, specifically no image available. These will also be dynamically generated. Can add classes during generation in for loop</em></p>
-                            <div class="col s6 m3">
-                                <div class="brew-list grey lighten-4 card">
-                                    <span class="brewery-title">Brewery Name (Brewery Type)</span>
-                                  <ul>
-                                      <li>Address with link?</li>
-                                      <li>Phone #?</li>
-                                  </ul>
-                                  <button class="btn">Link to Website</button>
-                                </div>
-                              </div>
-                              <div class="col s6 m3">
-                                <div class="brew-list grey lighten-4 card">
-                                    <span class="brewery-title">Brewery Name (Brewery Type)</span>
-                                  <ul>
-                                      <li>Address with link?</li>
-                                      <li>Phone #?</li>
-                                  </ul>
-                                  <button class="btn">Link to Website</button>
-                                </div>
-                              </div>
-                              <div class="col s6 m3">
-                                <div class="brew-list grey lighten-4 card">
-                                    <span class="brewery-title">Brewery Name (Brewery Type)</span>
-                                  <ul>
-                                      <li>Address with link?</li>
-                                      <li>Phone #?</li>
-                                  </ul>
-                                  <button class="btn">Link to Website</button>
-                                </div>
-                              </div>
-                              <div class="col s6 m3">
-                                <div class="brew-list grey lighten-4 card">
-                                    <span class="brewery-title">Brewery Name (Brewery Type)</span>
-                                  <ul>
-                                      <li>Address with link?</li>
-                                      <li>Phone #?</li>
-                                  </ul>
-                                  <button class="btn">Link to Website</button>
-                                </div>
-                              </div>
-                        </div>
-                    </div>
-                  </div>
                 </div>
-              </div>
+                <!--Event Results section-->
+                <div class="col s12 m12">
+                  <div id="brewery-response-container">
+                    dynamically loaded content will go here
+                  </div>
+                    <!-- <h4 class="center"><a id="breweries"></a>Breweries</h4> -->
+                      <p><em>Displaying these differently since they don't have as much information, specifically no image available. These will also be dynamically generated. Can add classes during generation in for loop</em></p>
+                        <div class="col s6 m3">
+                            <div class="brew-list grey lighten-4 card">
+                                <span class="brewery-title">Brewery Name (Brewery Type)</span>
+                                <ul>
+                                  <li>Address with link?</li>
+                                  <li>Phone #?</li>
+                                </ul>
+                                <button class="btn">Link to Website</button>
+                            </div>
+                        </div>
+                        <div class="col s6 m3">
+                            <div class="brew-list grey lighten-4 card">
+                                <span class="brewery-title">Brewery Name (Brewery Type)</span>
+                                <ul>
+                                    <li>Address with link?</li>
+                                    <li>Phone #?</li>
+                                </ul>
+                                <button class="btn">Link to Website</button>
+                            </div>
+                        </div>
+                        <div class="col s6 m3">
+                            <div class="brew-list grey lighten-4 card">
+                                <span class="brewery-title">Brewery Name (Brewery Type)</span>
+                                <ul>
+                                    <li>Address with link?</li>
+                                    <li>Phone #?</li>
+                                </ul>
+                                <button class="btn">Link to Website</button>
+                            </div>
+                        </div>
+                        <div class="col s6 m3">
+                            <div class="brew-list grey lighten-4 card">
+                                <span class="brewery-title">Brewery Name (Brewery Type)</span>
+                                <ul>
+                                    <li>Address with link?</li>
+                                    <li>Phone #?</li>
+                                </ul>
+                                <button class="btn">Link to Website</button>
+                            </div>
+                        </div>
+                </div>
+             </div>
+         </div>
+      </div>
 
 
+    <script type="text/javascript" src="./assets/js/script.js"></script>
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="./assets/js/materialize.min.js"></script>
 </body>

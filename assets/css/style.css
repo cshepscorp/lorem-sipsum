@@ -26,6 +26,7 @@ body {
 }
 .bg-image {
   background: url(../images/hero-city-night.png);
+  background-color: #000;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
