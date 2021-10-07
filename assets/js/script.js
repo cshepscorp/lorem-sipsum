@@ -60,13 +60,53 @@ var loadEventsByCity = function() {
               univSearchReturnCardActionLink.innerHTML = `<a href="${response._embedded.events[i].url}" target="_blank">Link to Event</a>`;
               univSearchReturnCardActionDiv.append(univSearchReturnCardActionLink);
 
-              // Append to the <div>
-              
-              // univSearchReturnList.append(univSearchReturn);
               searchTerm.value = '';
             };
-            // univContainer.prepend(univHeadline);
+
           });
+
+          var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
+  
+  fetch(brewApiUrl)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(response) {
+        
+        for(var i = 0; i < response.length; i++) {
+          // console.log(response[i]);
+          var brewContainer = document.querySelector("#brewery-response-container-events");
+          
+          var brewSearchListItem = document.createElement('div');
+          brewSearchListItem.classList ="col s12 m12";
+          brewContainer.append(brewSearchListItem);
+          
+          var brewSearchListItemCardDiv = document.createElement('div');
+          brewSearchListItemCardDiv.classList = "brew-list grey lighten-4 card";
+          brewSearchListItem.append(brewSearchListItemCardDiv);
+
+          var brewSearchListItemCardSpan = document.createElement('span');
+          brewSearchListItemCardSpan.classList = "brewery-title";
+          brewSearchListItemCardSpan.textContent = response[i].name;
+          brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
+
+          var brewSearchListItemCardP = document.createElement('p');
+          brewSearchListItemCardP.textContent = 'address goes here';
+          brewSearchListItemCardDiv.append(brewSearchListItemCardP);
+
+          var brewSearchListItemCardP2 = document.createElement('p');
+          brewSearchListItemCardP2.textContent = 'phone unmber goes here';
+          brewSearchListItemCardDiv.append(brewSearchListItemCardP2);
+
+          var brewSearchReturnLink = document.createElement('button');
+          brewSearchReturnLink.classList = "btn";
+          brewSearchReturnLink.innerHTML = `<a href="${response[i].website_url}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
+          brewSearchListItemCardDiv.append(brewSearchReturnLink);
+
+          searchTerm.value = '';
+        };
+
+      });
         
 };
 
