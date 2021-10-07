@@ -36,12 +36,9 @@ var loadEventsByCity = function() {
               univSearchReturnCardDiv.classList = "card-list";
               univSearchReturnList.append(univSearchReturnCardDiv);
 
-              var univSearchReturnCardImage = document.createElement('img');
-              univSearchReturnCardImage.setAttribute('href', response._embedded.events[i].images[4].url);
-              univSearchReturnCardDiv.append(univSearchReturnCardImage);
-
               var univSearchReturnCardContentDiv = document.createElement('div');
               univSearchReturnCardContentDiv.classList = "card-content";
+              univSearchReturnCardContentDiv.style.backgroundImage = `url('${response._embedded.events[i].images[3].url}')`;
               univSearchReturnList.append(univSearchReturnCardContentDiv);
 
               var univSearchReturnCardContentP = document.createElement('p');
