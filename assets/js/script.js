@@ -19,9 +19,7 @@ var loadEventsByCity = function() {
             return response.json();
           })
           .then(function(response) {
-            // Create a variable that will select the <div> where the GIF will be displayed
-            // var univHeadline = document.createElement('h3');
-            // univHeadline.textContent = 'Showing all events in ' + searchTerm.value;
+
             console.log('is this even running?');
             for(var i = 0; i < response._embedded.events.length; i++) {
               var univContainer = document.querySelector("#event-response-container");
