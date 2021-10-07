@@ -207,12 +207,12 @@
                 </div>
                 <div class="col s12 m4">
                       <div class="icon-block">
-                            <form id="search-form">
-                                <input id="searchTerm2" name="searchTerm2" type="text" class="validate">
-                                <button class="btn waves-effect waves-light" type="submit" onclick="loadEventsByCity()">Search by city
+                            
+                                <input id="searchTerm2" type="text">
+                                <button class="btn waves-effect waves-light" type="submit" onclick="loadBreweriesByCity()">Search by city
                                     <i class="material-icons right"></i>
                                 </button>
-                            </form>
+
                         <p class="dark">I imagine this map won't take up this mnuch space until they actually do a search. This is just a placeholder image to represent spacing.</p>
                       </div>
                 </div>
@@ -225,7 +225,7 @@
                 <!--Event Results section-->
                 <div class="col s12 m12">
                   <div id="brewery-response-container">
-                    dynamically loaded content will go here
+
                   </div>
                     <!-- <h4 class="center"><a id="breweries"></a>Breweries</h4> -->
                       <p><em>Displaying these differently since they don't have as much information, specifically no image available. These will also be dynamically generated. Can add classes during generation in for loop</em></p>

@@ -1,49 +1,16 @@
 
 // YOUR CODE HERE
 var searchTerm = document.querySelector("#searchTerm");
+var searchTerm2 = document.querySelector("#searchTerm2");
 
 // API key ticketmaster
 var tmApi = '&apikey=2MALjZsA5tAXCU1xKvJPNTzJVAsqk24J';
-
 
 // YOUR CODE HERE
 var loadEventsByCity = function() {
   // var rating = document.getElementById("rating").value;
   var theirSearch = searchTerm.value.trim();
-  // var apiUrl = 'https://api.giphy.com/v1/gifs/search?api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&q=' + theirSearch + '&rating=' + rating;
-  var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
-
-  fetch(brewApiUrl)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(response) {
-        // brewContainer.innerHTML = '';
-        // Create a variable that will select the <div> where the GIF will be displayed
-        var brewHeadline = document.createElement('h3');
-        
-        for(var i = 0; i < response.length; i++) {
-          // console.log(response[i]);
-          var brewContainer = document.querySelector("#brewery-response-container");
-          
-          var brewSearchListItem = document.createElement('div');
-          brewSearchListItem.classList ="card";
-
-          var brewSearchReturn = document.createElement('a');
-          brewSearchReturn.setAttribute('href', response[i].website_url);
-          brewSearchReturn.setAttribute('type', 'submit');
-          brewSearchReturn.setAttribute('target', '_blank');
-          brewSearchReturn.textContent = response[i].name;
-          console.log(brewSearchReturn + 'is bse');
-          brewContainer.append(brewSearchListItem);
-          brewSearchListItem.append(brewSearchReturn);
-
-          brewContainer.append(brewSearchReturn);
-          searchTerm.value = '';
-        };
-
-      });
-
+ 
       var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&city='
       + theirSearch + tmApi;
 
@@ -103,6 +70,53 @@ var loadEventsByCity = function() {
         
 };
 
-console.log('is this loading');
+var loadBreweriesByCity = function() {
+  // var rating = document.getElementById("rating").value;
+  var theirSearch = searchTerm2.value.trim();
+ 
+  var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
+  
+  fetch(brewApiUrl)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(response) {
+        
+        for(var i = 0; i < response.length; i++) {
+          // console.log(response[i]);
+          var brewContainer = document.querySelector("#brewery-response-container");
+          
+          var brewSearchListItem = document.createElement('div');
+          brewSearchListItem.classList ="col s6 m3";
+          brewContainer.append(brewSearchListItem);
+          
+          var brewSearchListItemCardDiv = document.createElement('div');
+          brewSearchListItemCardDiv.classList = "brew-list grey lighten-4 card";
+          brewSearchListItem.append(brewSearchListItemCardDiv);
 
-// loadEventsByCity();
+          var brewSearchListItemCardSpan = document.createElement('span');
+          brewSearchListItemCardSpan.classList = "brewery-title";
+          brewSearchListItemCardSpan.textContent = response[i].name;
+          brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
+
+          var brewSearchListItemCardP = document.createElement('p');
+          brewSearchListItemCardP.textContent = 'address goes here';
+          brewSearchListItemCardDiv.append(brewSearchListItemCardP);
+
+          var brewSearchListItemCardP2 = document.createElement('p');
+          brewSearchListItemCardP2.textContent = 'phone unmber goes here';
+          brewSearchListItemCardDiv.append(brewSearchListItemCardP2);
+
+          var brewSearchReturnLink = document.createElement('button');
+          brewSearchReturnLink.classList = "btn";
+          brewSearchReturnLink.innerHTML = `<a href="${response[i].website_url}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
+          brewSearchListItemCardDiv.append(brewSearchReturnLink);
+
+          searchTerm.value = '';
+        };
+
+      });
+        
+};
+
+
