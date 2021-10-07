@@ -1,0 +1,62 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+:root {
+  --primary: #009cde ;
+  --secondary: #fb0;
+}
+body {
+  color: #000;
+  line-height: 1.15;
+}
+
+.white-text {
+  color: #FFF!important;
+}
+.h5 {
+  color: #000;
+}
+.nav-new {
+  background-color: var(--primary);
+}
+.bg-image {
+  background: url(../images/hero-city-night.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: relative;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
+.brew-list {
+  padding: 10px;
+  margin-bottom: 6px;
+  margin-right: 10px;
+}
+
+.brewery-title {
+  font-size: 18px;
+  padding-top:0px
+}
+
+.breweries-section {
+  background-color: #ececec;
+}
