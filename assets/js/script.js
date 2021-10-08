@@ -30,18 +30,19 @@ var loadEventsByCity = function() {
 
               var univSearchReturnList = document.createElement('div');
               univSearchReturnList.classList = "card";
+              univSearchReturnList.style.height = '200px';
               univSearchReturnListContainer.append(univSearchReturnList);
 
               var univSearchReturnCardDiv = document.createElement('div');
               univSearchReturnCardDiv.classList = "card-list";
               univSearchReturnList.append(univSearchReturnCardDiv);
 
-              var univSearchReturnCardImage = document.createElement('img');
-              univSearchReturnCardImage.setAttribute('href', response._embedded.events[i].images[4].url);
-              univSearchReturnCardDiv.append(univSearchReturnCardImage);
-
               var univSearchReturnCardContentDiv = document.createElement('div');
               univSearchReturnCardContentDiv.classList = "card-content";
+              univSearchReturnCardContentDiv.style.backgroundImage = `url('${response._embedded.events[i].images[3].url}')`;
+              univSearchReturnCardContentDiv.style.backgroundRepeat = 'none';
+              univSearchReturnCardContentDiv.style.backgroundPosition = 'center center';
+              
               univSearchReturnList.append(univSearchReturnCardContentDiv);
 
               var univSearchReturnCardContentP = document.createElement('p');
@@ -54,7 +55,7 @@ var loadEventsByCity = function() {
               univSearchReturnList.append(univSearchReturnCardActionDiv);
 
               var univSearchReturnCardActionLink = document.createElement('a');
-              univSearchReturnCardActionLink.classList = "card-content";
+              // univSearchReturnCardActionLink.classList = "card-content";
               univSearchReturnCardActionLink.innerHTML = `<a href="${response._embedded.events[i].url}" target="_blank">Link to Event</a>`;
               univSearchReturnCardActionDiv.append(univSearchReturnCardActionLink);
 
@@ -71,7 +72,7 @@ var loadEventsByCity = function() {
       })
       .then(function(response) {
         
-        for(var i = 0; i < response.length; i++) {
+        for(var i = 0; i < 10; i++) {
           // console.log(response[i]);
           var brewContainer = document.querySelector("#brewery-response-container-events");
           
