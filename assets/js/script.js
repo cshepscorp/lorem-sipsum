@@ -36,7 +36,7 @@ var loadEventsByCity = function() {
               var univContainer = document.querySelector("#event-response-container");
 
               var univSearchReturnListContainer = document.createElement('div');
-              univSearchReturnListContainer.classList = "col s2 m6";
+              univSearchReturnListContainer.classList = "col s12 m6";
               univContainer.append(univSearchReturnListContainer);
 
               var univSearchReturnList = document.createElement('div');
