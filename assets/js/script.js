@@ -23,7 +23,7 @@ var loadEventsByCity = function() {
   var theirSearch = searchTerm.value.trim();
   eventsSearchResultsEl.classList.add("show")
  
-      var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&city='
+      var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&countryCode=US&city='
       + theirSearch + tmApi;
 
       fetch(tmApiUrl)
