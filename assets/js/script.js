@@ -3,13 +3,25 @@
 var searchTerm = document.querySelector("#searchTerm");
 var searchTerm2 = document.querySelector("#searchTerm2");
 
+var eventsButton = document.querySelector("#events-button");
+var eventsSearchResultsEl = document.querySelector("#events-search-results1");
+var eventsSearchResultsEl2 = document.querySelector("#events-search-results2");
+var eventsSearchResultsEl3 = document.querySelector("#events-search-results3");
+
+
 // API key ticketmaster
 var tmApi = '&apikey=2MALjZsA5tAXCU1xKvJPNTzJVAsqk24J';
 
-// YOUR CODE HERE
+var addHideClass = function() {
+  console.log('events button was clicked');
+  eventsSearchResultsEl.classList.remove('hide');
+  eventsSearchResultsEl2.classList.remove('hide');
+  eventsSearchResultsEl3.classList.remove('hide');
+};
 var loadEventsByCity = function() {
   // var rating = document.getElementById("rating").value;
   var theirSearch = searchTerm.value.trim();
+  eventsSearchResultsEl.classList.add("show")
  
       var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&city='
       + theirSearch + tmApi;
@@ -20,7 +32,6 @@ var loadEventsByCity = function() {
           })
           .then(function(response) {
 
-            console.log('is this even running?');
             for(var i = 0; i < response._embedded.events.length; i++) {
               var univContainer = document.querySelector("#event-response-container");
 
@@ -31,6 +42,7 @@ var loadEventsByCity = function() {
               var univSearchReturnList = document.createElement('div');
               univSearchReturnList.classList = "card";
               univSearchReturnList.style.height = '200px';
+              univSearchReturnList.style.maxHeight = '210px';
               univSearchReturnListContainer.append(univSearchReturnList);
 
               var univSearchReturnCardDiv = document.createElement('div');
@@ -47,7 +59,9 @@ var loadEventsByCity = function() {
 
               var univSearchReturnCardContentP = document.createElement('p');
               univSearchReturnCardContentP.classList = "card-content";
-              univSearchReturnCardContentP.textContent = response._embedded.events[i].name;
+              univSearchReturnCardContentP.innerHTML = response._embedded.events[i].name + `<br />` 
+              + `<span class="font-date">` + response._embedded.events[i].dates.start.localDate + `</span>` 
+              + `<br />` + `<span class="font-date">` + response._embedded.events[i]._embedded.venues.name + `</span>`;
               univSearchReturnCardContentDiv.append(univSearchReturnCardContentP);
 
               var univSearchReturnCardActionDiv = document.createElement('div');
@@ -56,7 +70,7 @@ var loadEventsByCity = function() {
 
               var univSearchReturnCardActionLink = document.createElement('a');
               // univSearchReturnCardActionLink.classList = "card-content";
-              univSearchReturnCardActionLink.innerHTML = `<a href="${response._embedded.events[i].url}" target="_blank">Link to Event</a>`;
+              univSearchReturnCardActionLink.innerHTML = `<a href="${response._embedded.events[i].url}" target="_blank">Event Link</a>`;
               univSearchReturnCardActionDiv.append(univSearchReturnCardActionLink);
 
               searchTerm.value = '';
@@ -160,5 +174,7 @@ var loadBreweriesByCity = function() {
       });
         
 };
+
+eventsButton.addEventListener("click", addHideClass);
 
 

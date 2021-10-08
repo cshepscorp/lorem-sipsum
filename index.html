@@ -67,23 +67,20 @@
       </div>
       <!--Event Results section-->
       <div class="container">
-        <div class="section">
+        <div class="section" style="min-height: 300px;">
           <!--   Icon Section   -->
           <div class="row">
             <div class="col s12">
-                <h3 class="center"><a id="events"></a>Events</h5>
+                <h3 class="center"><a id="events"></a>Events & Nearby Breweries</h5>
             </div>
             <div class="col s12 m4">
               <div class="icon-block">
-                
-                    <!-- <form id="search-form-events"> -->
-                      <input id="searchTerm" type="text">
-                      <button class="btn waves-effect waves-light" onclick="loadEventsByCity()">Search by city
+                      <input id="searchTerm" type="text" placeholder="search by city">
+                      <button id="events-button" class="btn waves-effect waves-light" onclick="loadEventsByCity()">Search by city
                             <i class="material-icons right"></i>
                         </button>
-                    <!-- </form> -->
-                <p class="dark">Should these selections be hidden until they actually input a city?</p>
-                    <div class="show">
+                <!-- <p class="dark">Should these selections be hidden until they actually input a city?</p> -->
+                    <div class="hide">
                         <label>Search by Genre</label>
                         <select class="browser-default">
                         <option value="" disabled selected>Genre</option>
@@ -99,10 +96,16 @@
                         <option value="2">Option 2</option>
                         <option value="3">Option 3</option>
                         </select>
-                        <p class="dark">- OR -</p>
-                        <label>Search by Something Else</label>
+                    </div>
+              </div>
+            </div>
+            <div class="col s12 m4">
+              <div class="icon-block">
+                <div class="hide" id="events-search-results1">
+                        <p class="dark">Filter By Genre</p>
+                        <label>Search by Genre</label>
                         <select class="browser-default">
-                        <option value="" disabled selected>Other</option>
+                        <option value="" disabled selected>Genre</option>
                         <option value="1">Option 1</option>
                         <option value="2">Option 2</option>
                         <option value="3">Option 3</option>
@@ -110,88 +113,38 @@
                     </div>
               </div>
             </div>
-            <div class="col s12 m8">
+            <div class="col s12 m4">
               <div class="icon-block">
                 <!-- <h5 class="center">User Experience Focused</h5> -->
-                <p class="light"><img src="https://via.placeholder.com/150.png?text=Map+Will+Go+Here" /></p>
+                <!-- <p class="light"><img src="https://via.placeholder.com/150.png?text=Map+Will+Go+Here" /></p>-->
+                 <div class="icon-block">
+                  <div class="hide" id="events-search-results2">
+                      <p class="dark">- OR Venue-</p>
+                      <label>Search by Venue</label>
+                      <select class="browser-default">
+                      <option value="" disabled selected>Venue</option>
+                      <option value="1">Option 1</option>
+                      <option value="2">Option 2</option>
+                      <option value="3">Option 3</option>
+                      </select>
+                  </div>
+            </div>
               </div>
             </div>
             <!--Event Results section-->
-            <div class="col s12" >
-                <h4 class="center"><a id="events"></a>Search Results</h4>
+            <div class="col s12 hide" id="events-search-results3" style="padding-top: 30px;">
+                <!-- <h4 class="center"><a id="events"></a>Search Results</h4> -->
                 <div class="col s12 m8">
-                    <h5 class="center">Events</h5>
+                    <h5 class="center" >Events</h5>
 
                         <div id="event-response-container">
                           
                         </div>
-                        <!-- <div class="col s12 m4">
-                            <div class="card">
-                                <div class="card-image">
-                                <img src="./assets/images/sample-1.jpeg">
-                                <span class="card-title">Result One</span>
-                                </div>
-                                <div class="card-content">
-                                <p>Event Info header</p>
-                                </div>
-                                <div class="card-action">
-                                <a href="#">Link to Event</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 m4">
-                            <div class="card">
-                                <div class="card-image">
-                                <img src="./assets/images/sample-1.jpeg">
-                                <span class="card-title">Result Two</span>
-                                </div>
-                                <div class="card-content">
-                                <p>Event Info header</p>
-                                </div>
-                                <div class="card-action">
-                                <a href="#">Link to Event</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 m4">
-                            <div class="card">
-                                <div class="card-image">
-                                <img src="./assets/images/sample-1.jpeg">
-                                <span class="card-title">Result Three</span>
-                                </div>
-                                <div class="card-content">
-                                <p>Event Info header</p>
-                                </div>
-                                <div class="card-action">
-                                <a href="#">Link to Event</a>
-                                </div>
-                            </div>
-                        </div> -->
                 </div>
                 <div class="col s12 m4">
                     <h5 class="center">Breweries</h5>
-                    <!-- <p><em>Displaying these differently since they don't have as much information, specifically no image available. These will also be dynamically generated. Can add classes during generation in for loop</em></p> -->
+
                     <div id="brewery-response-container-events"></div> 
-                    <!-- <div class="brew-list grey lighten-4 card">
-                        <div>
-                            <span class="brewery-title">Brewery Name (Brewery Type)</span>
-                          <ul>
-                              <li>Address with link?</li>
-                              <li>Phone #?</li>
-                          </ul>
-                          <button class="btn">Link to Website</button>
-                        </div>
-                      </div>
-                      <div class="brew-list grey lighten-4 card">
-                        <div>
-                            <span class="brewery-title">Brewery Name (Brewery Type)</span>
-                          <ul>
-                              <li>Address with link?</li>
-                              <li>Phone #?</li>
-                          </ul>
-                          <button class="btn">Link to Website</button>
-                        </div>
-                      </div> -->
                 </div>
             </div>
           </div>
@@ -208,7 +161,7 @@
                 <div class="col s12 m4">
                       <div class="icon-block">
                             
-                                <input id="searchTerm2" type="text">
+                                <input id="searchTerm2" type="text" placeholder="search by city">
                                 <button class="btn waves-effect waves-light" type="submit" onclick="loadBreweriesByCity()">Search by city
                                     <i class="material-icons right"></i>
                                 </button>
