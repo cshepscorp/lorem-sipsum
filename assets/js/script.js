@@ -41,7 +41,7 @@ var loadEventsByCity = function() {
 
               var univSearchReturnList = document.createElement('div');
               univSearchReturnList.classList = "card";
-              univSearchReturnList.style.height = '200px';
+              univSearchReturnList.style.height = '180px';
               univSearchReturnList.style.maxHeight = '210px';
               univSearchReturnListContainer.append(univSearchReturnList);
 
@@ -96,8 +96,8 @@ var loadEventsByCity = function() {
           
           var brewSearchListItemCardDiv = document.createElement('div');
           brewSearchListItemCardDiv.classList = "brew-list grey lighten-4 card";
-          brewSearchListItemCardDiv.style.height = '200px';
-          brewSearchListItemCardDiv.style.width = '200px'
+          brewSearchListItemCardDiv.style.height = '180px';
+          brewSearchListItemCardDiv.style.width = '250px';
           brewSearchListItem.append(brewSearchListItemCardDiv);
 
           var brewSearchListItemCardSpan = document.createElement('span');

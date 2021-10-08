@@ -79,3 +79,10 @@ h5 {
 .breweries-section {
   background-color: #ececec;
 }
+
+@media screen and (max-width:575px) {
+  .brew-list {
+    width: 265px;
+  }
+
+}
