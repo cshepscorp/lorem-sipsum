@@ -139,11 +139,11 @@ var loadBreweriesByCity = function() {
           brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
 
           var brewSearchListItemCardP = document.createElement('p');
-          brewSearchListItemCardP.textContent = 'address goes here';
+          brewSearchListItemCardP.textContent = response[i].street;
           brewSearchListItemCardDiv.append(brewSearchListItemCardP);
 
           var brewSearchListItemCardP2 = document.createElement('p');
-          brewSearchListItemCardP2.textContent = 'phone unmber goes here';
+          brewSearchListItemCardP2.textContent = response[i].phone,
           brewSearchListItemCardDiv.append(brewSearchListItemCardP2);
 
           var brewSearchReturnLink = document.createElement('button');
