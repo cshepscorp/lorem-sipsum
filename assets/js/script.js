@@ -1,4 +1,4 @@
-
+// here is my little note for Will
 // YOUR CODE HERE
 var searchTerm = document.querySelector("#searchTerm");
 var searchTerm2 = document.querySelector("#searchTerm2");
