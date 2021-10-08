@@ -36,7 +36,7 @@ var loadEventsByCity = function() {
               var univContainer = document.querySelector("#event-response-container");
 
               var univSearchReturnListContainer = document.createElement('div');
-              univSearchReturnListContainer.classList = "col s12 m4";
+              univSearchReturnListContainer.classList = "col s2 m6";
               univContainer.append(univSearchReturnListContainer);
 
               var univSearchReturnList = document.createElement('div');
@@ -61,7 +61,7 @@ var loadEventsByCity = function() {
               univSearchReturnCardContentP.classList = "card-content";
               univSearchReturnCardContentP.innerHTML = response._embedded.events[i].name + `<br />` 
               + `<span class="font-date">` + response._embedded.events[i].dates.start.localDate + `</span>` 
-              + `<br />` + `<span class="font-date">` + response._embedded.events[i]._embedded.venues.name + `</span>`;
+              + `<br />` + `<span class="font-date">` + response._embedded.events[i]._embedded.venues[0].name + `</span>`;
               univSearchReturnCardContentDiv.append(univSearchReturnCardContentP);
 
               var univSearchReturnCardActionDiv = document.createElement('div');
@@ -91,7 +91,7 @@ var loadEventsByCity = function() {
           var brewContainer = document.querySelector("#brewery-response-container-events");
           
           var brewSearchListItem = document.createElement('div');
-          brewSearchListItem.classList ="col s12 m12";
+          brewSearchListItem.classList ="col";
           brewContainer.append(brewSearchListItem);
           
           var brewSearchListItemCardDiv = document.createElement('div');
@@ -105,12 +105,13 @@ var loadEventsByCity = function() {
           brewSearchListItemCardSpan.textContent = response[i].name;
           brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
 
-          var brewSearchListItemCardP = document.createElement('p');
+          var brewSearchListItemCardP = document.createElement('li');
           brewSearchListItemCardP.textContent = response[i].street
           brewSearchListItemCardDiv.append(brewSearchListItemCardP);
 
-          var brewSearchListItemCardP2 = document.createElement('p');
+          var brewSearchListItemCardP2 = document.createElement('li');
           brewSearchListItemCardP2.textContent = response[i].phone;
+          brewSearchListItemCardP2.style.marginBottom = '20px';
           brewSearchListItemCardDiv.append(brewSearchListItemCardP2);
 
           var brewSearchReturnLink = document.createElement('button');
@@ -142,12 +143,12 @@ var loadBreweriesByCity = function() {
           var brewContainer = document.querySelector("#brewery-response-container");
           
           var brewSearchListItem = document.createElement('div');
-          brewSearchListItem.classList ="col s6 m3";
+          brewSearchListItem.classList ="col s12 m4";
           brewContainer.append(brewSearchListItem);
           
           var brewSearchListItemCardDiv = document.createElement('div');
           brewSearchListItemCardDiv.classList = "brew-list grey lighten-4 card";
-          brewSearchListItemCardDiv.style.height = '200px';
+          brewSearchListItemCardDiv.style.height = '180px';
           brewSearchListItem.append(brewSearchListItemCardDiv);
 
           var brewSearchListItemCardSpan = document.createElement('span');
@@ -155,12 +156,13 @@ var loadBreweriesByCity = function() {
           brewSearchListItemCardSpan.textContent = response[i].name;
           brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
 
-          var brewSearchListItemCardP = document.createElement('p');
+          var brewSearchListItemCardP = document.createElement('li');
           brewSearchListItemCardP.textContent = response[i].street;
           brewSearchListItemCardDiv.append(brewSearchListItemCardP);
 
-          var brewSearchListItemCardP2 = document.createElement('p');
-          brewSearchListItemCardP2.textContent = response[i].phone,
+          var brewSearchListItemCardP2 = document.createElement('li');
+          brewSearchListItemCardP2.textContent = response[i].phone;
+          brewSearchListItemCardP2.style.marginBottom = '10px';
           brewSearchListItemCardDiv.append(brewSearchListItemCardP2);
 
           var brewSearchReturnLink = document.createElement('button');
