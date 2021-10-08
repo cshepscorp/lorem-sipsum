@@ -82,6 +82,8 @@ var loadEventsByCity = function() {
           
           var brewSearchListItemCardDiv = document.createElement('div');
           brewSearchListItemCardDiv.classList = "brew-list grey lighten-4 card";
+          brewSearchListItemCardDiv.style.height = '200px';
+          brewSearchListItemCardDiv.style.width = '200px'
           brewSearchListItem.append(brewSearchListItemCardDiv);
 
           var brewSearchListItemCardSpan = document.createElement('span');
@@ -90,11 +92,11 @@ var loadEventsByCity = function() {
           brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
 
           var brewSearchListItemCardP = document.createElement('p');
-          brewSearchListItemCardP.textContent = 'address goes here';
+          brewSearchListItemCardP.textContent = response[i].street
           brewSearchListItemCardDiv.append(brewSearchListItemCardP);
 
           var brewSearchListItemCardP2 = document.createElement('p');
-          brewSearchListItemCardP2.textContent = 'phone unmber goes here';
+          brewSearchListItemCardP2.textContent = response[i].phone;
           brewSearchListItemCardDiv.append(brewSearchListItemCardP2);
 
           var brewSearchReturnLink = document.createElement('button');
@@ -121,7 +123,7 @@ var loadBreweriesByCity = function() {
       })
       .then(function(response) {
         
-        for(var i = 0; i < response.length; i++) {
+        for(var i = 0; i < 12; i++) {
           // console.log(response[i]);
           var brewContainer = document.querySelector("#brewery-response-container");
           
@@ -131,6 +133,7 @@ var loadBreweriesByCity = function() {
           
           var brewSearchListItemCardDiv = document.createElement('div');
           brewSearchListItemCardDiv.classList = "brew-list grey lighten-4 card";
+          brewSearchListItemCardDiv.style.height = '200px';
           brewSearchListItem.append(brewSearchListItemCardDiv);
 
           var brewSearchListItemCardSpan = document.createElement('span');
