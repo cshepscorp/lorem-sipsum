@@ -3,15 +3,27 @@
 var searchTerm = document.querySelector("#searchTerm");
 var searchTerm2 = document.querySelector("#searchTerm2");
 
+var eventsButton = document.querySelector("#events-button");
+var eventsSearchResultsEl = document.querySelector("#events-search-results1");
+var eventsSearchResultsEl2 = document.querySelector("#events-search-results2");
+var eventsSearchResultsEl3 = document.querySelector("#events-search-results3");
+
+
 // API key ticketmaster
 var tmApi = '&apikey=2MALjZsA5tAXCU1xKvJPNTzJVAsqk24J';
 
-// YOUR CODE HERE
+var addHideClass = function() {
+  console.log('events button was clicked');
+  eventsSearchResultsEl.classList.remove('hide');
+  eventsSearchResultsEl2.classList.remove('hide');
+  eventsSearchResultsEl3.classList.remove('hide');
+};
 var loadEventsByCity = function() {
   // var rating = document.getElementById("rating").value;
   var theirSearch = searchTerm.value.trim();
+  eventsSearchResultsEl.classList.add("show")
  
-      var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&city='
+      var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&countryCode=US&city='
       + theirSearch + tmApi;
 
       fetch(tmApiUrl)
@@ -20,17 +32,17 @@ var loadEventsByCity = function() {
           })
           .then(function(response) {
 
-            console.log('is this even running?');
             for(var i = 0; i < response._embedded.events.length; i++) {
               var univContainer = document.querySelector("#event-response-container");
 
               var univSearchReturnListContainer = document.createElement('div');
-              univSearchReturnListContainer.classList = "col s12 m4";
+              univSearchReturnListContainer.classList = "col s12 m6";
               univContainer.append(univSearchReturnListContainer);
 
               var univSearchReturnList = document.createElement('div');
               univSearchReturnList.classList = "card";
-              univSearchReturnList.style.height = '200px';
+              univSearchReturnList.style.height = '180px';
+              univSearchReturnList.style.maxHeight = '210px';
               univSearchReturnListContainer.append(univSearchReturnList);
 
               var univSearchReturnCardDiv = document.createElement('div');
@@ -47,7 +59,9 @@ var loadEventsByCity = function() {
 
               var univSearchReturnCardContentP = document.createElement('p');
               univSearchReturnCardContentP.classList = "card-content";
-              univSearchReturnCardContentP.textContent = response._embedded.events[i].name;
+              univSearchReturnCardContentP.innerHTML = response._embedded.events[i].name + `<br />` 
+              + `<span class="font-date">` + response._embedded.events[i].dates.start.localDate + `</span>` 
+              + `<br />` + `<span class="font-date">` + response._embedded.events[i]._embedded.venues[0].name + `</span>`;
               univSearchReturnCardContentDiv.append(univSearchReturnCardContentP);
 
               var univSearchReturnCardActionDiv = document.createElement('div');
@@ -56,7 +70,7 @@ var loadEventsByCity = function() {
 
               var univSearchReturnCardActionLink = document.createElement('a');
               // univSearchReturnCardActionLink.classList = "card-content";
-              univSearchReturnCardActionLink.innerHTML = `<a href="${response._embedded.events[i].url}" target="_blank">Link to Event</a>`;
+              univSearchReturnCardActionLink.innerHTML = `<a href="${response._embedded.events[i].url}" target="_blank">Event Link</a>`;
               univSearchReturnCardActionDiv.append(univSearchReturnCardActionLink);
 
               searchTerm.value = '';
@@ -77,13 +91,13 @@ var loadEventsByCity = function() {
           var brewContainer = document.querySelector("#brewery-response-container-events");
           
           var brewSearchListItem = document.createElement('div');
-          brewSearchListItem.classList ="col s12 m12";
+          brewSearchListItem.classList ="col";
           brewContainer.append(brewSearchListItem);
           
           var brewSearchListItemCardDiv = document.createElement('div');
           brewSearchListItemCardDiv.classList = "brew-list grey lighten-4 card";
-          brewSearchListItemCardDiv.style.height = '200px';
-          brewSearchListItemCardDiv.style.width = '200px'
+          brewSearchListItemCardDiv.style.height = '180px';
+          brewSearchListItemCardDiv.style.width = '250px';
           brewSearchListItem.append(brewSearchListItemCardDiv);
 
           var brewSearchListItemCardSpan = document.createElement('span');
@@ -91,12 +105,13 @@ var loadEventsByCity = function() {
           brewSearchListItemCardSpan.textContent = response[i].name;
           brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
 
-          var brewSearchListItemCardP = document.createElement('p');
+          var brewSearchListItemCardP = document.createElement('li');
           brewSearchListItemCardP.textContent = response[i].street
           brewSearchListItemCardDiv.append(brewSearchListItemCardP);
 
-          var brewSearchListItemCardP2 = document.createElement('p');
+          var brewSearchListItemCardP2 = document.createElement('li');
           brewSearchListItemCardP2.textContent = response[i].phone;
+          brewSearchListItemCardP2.style.marginBottom = '20px';
           brewSearchListItemCardDiv.append(brewSearchListItemCardP2);
 
           var brewSearchReturnLink = document.createElement('button');
@@ -128,12 +143,12 @@ var loadBreweriesByCity = function() {
           var brewContainer = document.querySelector("#brewery-response-container");
           
           var brewSearchListItem = document.createElement('div');
-          brewSearchListItem.classList ="col s6 m3";
+          brewSearchListItem.classList ="col s12 m4";
           brewContainer.append(brewSearchListItem);
           
           var brewSearchListItemCardDiv = document.createElement('div');
           brewSearchListItemCardDiv.classList = "brew-list grey lighten-4 card";
-          brewSearchListItemCardDiv.style.height = '200px';
+          brewSearchListItemCardDiv.style.height = '180px';
           brewSearchListItem.append(brewSearchListItemCardDiv);
 
           var brewSearchListItemCardSpan = document.createElement('span');
@@ -141,12 +156,13 @@ var loadBreweriesByCity = function() {
           brewSearchListItemCardSpan.textContent = response[i].name;
           brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
 
-          var brewSearchListItemCardP = document.createElement('p');
+          var brewSearchListItemCardP = document.createElement('li');
           brewSearchListItemCardP.textContent = response[i].street;
           brewSearchListItemCardDiv.append(brewSearchListItemCardP);
 
-          var brewSearchListItemCardP2 = document.createElement('p');
-          brewSearchListItemCardP2.textContent = response[i].phone,
+          var brewSearchListItemCardP2 = document.createElement('li');
+          brewSearchListItemCardP2.textContent = response[i].phone;
+          brewSearchListItemCardP2.style.marginBottom = '10px';
           brewSearchListItemCardDiv.append(brewSearchListItemCardP2);
 
           var brewSearchReturnLink = document.createElement('button');
@@ -160,5 +176,7 @@ var loadBreweriesByCity = function() {
       });
         
 };
+
+eventsButton.addEventListener("click", addHideClass);
 
 
