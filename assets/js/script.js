@@ -32,7 +32,7 @@ var loadEventsByCity = function() {
           })
           .then(function(response) {
 
-            for(var i = 0; i < response._embedded.events.length; i++) {
+            for(var i = 0; i < 12; i++) {
               var univContainer = document.querySelector("#event-response-container");
 
               var univSearchReturnListContainer = document.createElement('div');
@@ -176,7 +176,42 @@ var loadBreweriesByCity = function() {
       });
         
 };
+var appendControlEvent = function() {
+  var eventContainerEl = document.querySelector('#event-response-container');
+  eventContainerEl.classList.add('check-class');
+
+  var eventBreweryContainerEl = document.querySelector('#brewery-response-container-events');
+  eventBreweryContainerEl.classList.add('check-class');
+
+  var checkEvents = eventContainerEl.getAttribute('class');
+  var checkEventsBrew = eventBreweryContainerEl.getAttribute('class');
+
+  if (!checkEvents && !checkEventsBrew) {
+    loadEventsByCity();
+  } else {
+    eventContainerEl.innerHTML = '';
+    eventBreweryContainerEl.innerHTML = '';
+
+    loadEventsByCity();
+  };
+
+};
+
+
+var appendControlBrewery = function() {
+  var brewContainerEl = document.querySelector('#brewery-response-container');
+  brewContainerEl.classList.add('check-class');
+  console.log(brewContainerEl);
+
+  var checkBrew = brewContainerEl.getAttribute('class')
+
+  if (!checkBrew) {
+    loadBreweriesByCity
+  } else {
+    brewContainerEl.innerHTML = '';
+
+    loadBreweriesByCity();
+  };
+};
 
 eventsButton.addEventListener("click", addHideClass);
-
-
