@@ -170,7 +170,7 @@ var loadBreweriesByCity = function() {
           brewSearchReturnLink.innerHTML = `<a href="${response[i].website_url}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
           brewSearchListItemCardDiv.append(brewSearchReturnLink);
 
-          searchTerm.value = '';
+          searchTerm2.value = '';
         };
 
       });
