@@ -75,40 +75,21 @@
             </div>
             <div class="col s12 m4">
               <div class="icon-block">
+                      <label>Enter a city to search</label>
                       <input id="searchTerm" type="text" placeholder="search by city">
-                      <button id="events-button" class="btn waves-effect waves-light" onclick="appendControlEvent()">Search by city
-                            <i class="material-icons right"></i>
-                        </button>
-                <!-- <p class="dark">Should these selections be hidden until they actually input a city?</p> -->
-                    <div class="hide">
-                        <label>Search by Genre</label>
-                        <select class="browser-default">
-                        <option value="" disabled selected>Genre</option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
-                        </select>
-                        <p class="dark">- OR -</p>
-                        <label>Search by Venue</label>
-                        <select class="browser-default">
-                        <option value="" disabled selected>Venue</option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
-                        </select>
-                    </div>
+                  
               </div>
             </div>
             <div class="col s12 m4">
               <div class="icon-block">
-                <div class="hide" id="events-search-results1">
+                <div class="show" id="events-search-results1">
                         <!-- <p class="dark">Filter By Genre</p> -->
-                        <label>Search by Genre</label>
-                        <select class="browser-default">
-                        <option value="" disabled selected>Genre</option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
+                        <label>Narrow search by event type</label>
+                        <select class="browser-default" id="classification">
+                          <option value="" disabled selected></option>
+                          <option value="Music">Music</option>
+                          <option value="Arts & Theatre">Arts & Theatre</option>
+                          <option value="Sports">Sports</option>
                         </select>
                     </div>
               </div>
@@ -116,15 +97,18 @@
             <div class="col s12 m4">
               <div class="icon-block">
                  <div class="icon-block">
-                  <div class="hide" id="events-search-results2">
+                  <div class="show" id="events-search-results2">
                       <!-- <p class="dark">- OR Venue-</p> -->
-                      <label>Search by Venue</label>
+                      <button id="events-button" class="btn waves-effect waves-light" onclick="appendControlEvent()">Search by city
+                        <i class="material-icons right"></i>
+                      </button>
+                      <!-- <label>Search by Venue</label>
                       <select class="browser-default">
                       <option value="" disabled selected>Venue</option>
                       <option value="1">Option 1</option>
                       <option value="2">Option 2</option>
                       <option value="3">Option 3</option>
-                      </select>
+                      </select> -->
                   </div>
             </div>
               </div>

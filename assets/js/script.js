@@ -21,10 +21,11 @@ var addHideClass = function() {
 var loadEventsByCity = function() {
   // var rating = document.getElementById("rating").value;
   var theirSearch = searchTerm.value.trim();
-  eventsSearchResultsEl.classList.add("show")
+  eventsSearchResultsEl.classList.add("show");
+  var classification = document.getElementById("classification").value;
  
-      var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&countryCode=US&city='
-      + theirSearch + tmApi;
+      var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&size=40&countryCode=US&city='
+      + theirSearch + '&classificationName=' + classification + '&' + tmApi;
 
       fetch(tmApiUrl)
           .then(function(response) {
