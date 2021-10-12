@@ -6,7 +6,7 @@
  * Made By MaterializeCSS.com
  */
 
-:root {
+ :root {
   --primary: #009cde ;
   --secondary: #fb0;
 }
@@ -67,6 +67,7 @@ h5 {
 
 .brew-list {
   padding: 10px;
+  padding-top:20px;
   margin-bottom: 6px;
   margin-right: 10px;
 }
