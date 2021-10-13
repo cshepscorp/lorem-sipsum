@@ -73,6 +73,46 @@ h5 {
   padding-left: 10px;
 }
 
+.american {
+  background-image: url(../images/american.jpg);
+}
+
+.asian {
+  background-image: url(../images/asian.jpg);
+}
+
+.burgers {
+  background-image: url(../images/burgers.jpg);
+}
+
+.irish {
+  background-image: url(../images/irish.jpg);
+}
+
+.italian {
+  background-image: url(../images/italian.jpg);
+}
+
+.japanese {
+  background-image: url(../images/japanese.jpg);
+}
+
+.mexican {
+  background-image: url(../images/mexican.jpg);
+}
+
+.sandwiches {
+  background-image: url(../images/sandwich.jpg);
+}
+
+.steak {
+  background-image: url(../images/steak.jpg);
+}
+
+.dining-generic {
+  background-image: url(../images/dining-generic.jpg);
+}
+
 
 @media screen and (max-width:575px) {
   .brew-list {

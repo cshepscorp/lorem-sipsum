@@ -9,8 +9,8 @@ var eventsSearchResultsEl3 = document.querySelector("#events-search-results3");
 var cityButtons = document.querySelector("#city-buttons");
 
 // API info
-var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
-// var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
+// var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
+var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
 // var dmApi = 'bd8f07fd4ccba45e976bd5aff28bfb08' // Will Api key
 // var dmApi = '0b1da3bd2b6b0219770486baca056a30' // Daniel Api key
 var tmApi = '&apikey=2MALjZsA5tAXCU1xKvJPNTzJVAsqk24J'; // API key ticketmaster CS
@@ -37,32 +37,29 @@ var loadEventsByCity = function(url, brewUrl) {
             for(var i = 0; i < 10; i++) {
 
               var univSearchReturnListContainer = document.createElement('div');
-              univSearchReturnListContainer.classList = "col s12 m12";
+              univSearchReturnListContainer.classList = "col";
               univContainer.append(univSearchReturnListContainer);
 
               var univSearchReturnList = document.createElement('div');
-              univSearchReturnList.classList = "card";
+              univSearchReturnList.classList = "col s12 m12 grey lighten-4 card";
               univSearchReturnList.style.height = '180px';
-              univSearchReturnList.style.maxHeight = '210px';
+              univSearchReturnList.style.width = '250px';
+              univSearchReturnList.style.backgroundImage = `url('${response._embedded.events[i].images[3].url}')`;
+              univSearchReturnList.style.backgroundRepeat = 'none';
+              univSearchReturnList.style.backgroundPosition = 'center center';
               univSearchReturnListContainer.append(univSearchReturnList);
 
-              var univSearchReturnCardDiv = document.createElement('div');
-              univSearchReturnCardDiv.classList = "card-list";
-              univSearchReturnList.append(univSearchReturnCardDiv);
+              // var genre = response._embedded.events[i].classifications[0].genre.name;
+              //var health = response._embedded.events[i].ticketing.healthCheck.summary;
 
-              var univSearchReturnCardContentDiv = document.createElement('div');
-              univSearchReturnCardContentDiv.classList = "card-content";
-              univSearchReturnCardContentDiv.style.backgroundImage = `url('${response._embedded.events[i].images[3].url}')`;
-              univSearchReturnCardContentDiv.style.backgroundRepeat = 'none';
-              univSearchReturnCardContentDiv.style.backgroundPosition = 'center center';
-              univSearchReturnList.append(univSearchReturnCardContentDiv);
-
-              var univSearchReturnCardContentP = document.createElement('p');
-              univSearchReturnCardContentP.classList = "card-content";
-              univSearchReturnCardContentP.innerHTML = response._embedded.events[i].name + `<br />` 
-              + `<span class="font-date">` + response._embedded.events[i].dates.start.localDate + `</span>` 
+              var univSearchReturnCardContentDiv = document.createElement('p');
+              univSearchReturnCardContentDiv.classList = "brewery-info";
+              univSearchReturnCardContentDiv.innerHTML = response._embedded.events[i].name + `<br />` 
+              + `<span class="font-date">` + response._embedded.events[i].dates.start.localDate + `</span>`
+              //+ `<br />` + `<span class="font-date">Please note: ` + health + `</span>` +
               + `<br />` + `<span class="font-date">` + response._embedded.events[i]._embedded.venues[0].name + `</span>`;
-              univSearchReturnCardContentDiv.append(univSearchReturnCardContentP);
+
+              univSearchReturnList.append(univSearchReturnCardContentDiv);
 
               var univSearchReturnZip = response._embedded.events[i]._embedded.venues[0].postalCode;
               postalCodeContainer.push(univSearchReturnZip);
@@ -89,16 +86,12 @@ var loadEventsByCity = function(url, brewUrl) {
               }
               
               var mostCommonZip = findMostFrequent(postalCodeContainer); 
-              console.log(mostCommonZip + ' is the most common zip');
+              // console.log(mostCommonZip + ' is the most common zip');
 
-              var univSearchReturnCardActionDiv = document.createElement('div');
-              univSearchReturnCardActionDiv.classList = "card-action";
-              univSearchReturnList.append(univSearchReturnCardActionDiv);
-
-              var univSearchReturnCardActionLink = document.createElement('a');
-              // univSearchReturnCardActionLink.classList = "card-content";
-              univSearchReturnCardActionLink.innerHTML = `<a href="${response._embedded.events[i].url}" target="_blank">Event Link</a>`;
-              univSearchReturnCardActionDiv.append(univSearchReturnCardActionLink);
+              var univSearchReturnCardActionLink = document.createElement('button');
+              univSearchReturnCardActionLink.classList = "btn";
+              univSearchReturnCardActionLink.innerHTML = `<a href="${response._embedded.events[i].url}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
+              univSearchReturnList.append(univSearchReturnCardActionLink);
 
               searchTerm.value = '';
             };
@@ -127,28 +120,53 @@ var loadEventsByCity = function(url, brewUrl) {
                 restSearchListItem.classList ="col";
                 restContainer.append(restSearchListItem);
 
+                var cuisineType = response.data[i].cuisines[0];
+                var cuisineType2 = response.data[i].cuisines[1];
+                // console.log(cuisineType, cuisineType2);
+
+                // change background of listing based on type of cuisine
+                if (cuisineType.includes('Burgers')) {
+                  cuisineType = 'burgers' 
+                } else if (cuisineType.includes('American')) { 
+                  cuisineType = 'american'
+                } else if (cuisineType.includes('Asian')) { 
+                  cuisineType = 'asian'
+                } else if (cuisineType.includes('Japanese')) { 
+                  cuisineType = 'japanese'
+                } else if (cuisineType.includes('Italian')) { 
+                  cuisineType = 'italian'  
+                } else {
+                  cuisineType = 'dining-generic'
+                }
+
+                if(cuisineType2) {
+                  if (cuisineType2.includes('Mexican')) {
+                    cuisineType = 'mexican'
+                  } else if (cuisineType2.includes('Steak')) {
+                    cuisineType = 'steak'
+                  } else if (cuisineType2.includes('Sandwiches')) {
+                    cuisineType = 'sandwiches' 
+                  } else if (cuisineType2.includes('Irish')) {
+                    cuisineType = 'irish' 
+                  } else {
+                    cuisineType = 'dining-generic'
+                  }
+                } 
+
                 var restSearchListItemCardDiv = document.createElement('div');
-                restSearchListItemCardDiv.classList = "col s12 m12 brew-list grey lighten-4 card";
-                restSearchListItemCardDiv.style.backgroundImage = `url(./assets/images/dining-generic.jpg)`;
+                restSearchListItemCardDiv.classList = `col s12 m12 brew-list grey lighten-4 card ${cuisineType}`;
                 restSearchListItemCardDiv.style.backgroundRepeat = 'none';
                 restSearchListItemCardDiv.style.backgroundPosition = 'center center';
                 restSearchListItemCardDiv.style.height = '180px';
                 restSearchListItem.append(restSearchListItemCardDiv);
       
-                var restSearchListItemCardSpan = document.createElement('span');
-                restSearchListItemCardSpan.classList = "brewery-title";
-                restSearchListItemCardSpan.textContent = response.data[i].restaurant_name;
+                var restSearchListItemCardSpan = document.createElement('p');
+                restSearchListItemCardSpan.classList = "brewery-info";
+                restSearchListItemCardSpan.innerHTML = response.data[i].restaurant_name + `<br />`
+                + `<span class="font-date">` + response.data[i].address.formatted + `</span>` + `<br />`
+                + `<span class="font-date">` + response.data[i].restaurant_phone + `</span>`;
                 console.log('restSearchListItemCardSpan is ' + restSearchListItemCardSpan);
                 restSearchListItemCardDiv.append(restSearchListItemCardSpan);
-      
-                var restSearchListItemCardP = document.createElement('li');
-                restSearchListItemCardP.textContent = response.data[i].address.formatted;
-                restSearchListItemCardDiv.append(restSearchListItemCardP);
-      
-                var restSearchListItemCardP2 = document.createElement('li');
-                restSearchListItemCardP2.textContent = response.data[i].restaurant_phone;
-                restSearchListItemCardP2.style.marginBottom = '20px';
-                restSearchListItemCardDiv.append(restSearchListItemCardP2);
       
                 var restSearchReturnLink = document.createElement('button');
                 restSearchReturnLink.classList = "btn";
@@ -185,8 +203,6 @@ var loadEventsByCity = function(url, brewUrl) {
             brewSearchListItemCardDiv.classList = "col s12 m12 grey lighten-4 card breweries-section";
             brewSearchListItemCardDiv.style.height = '180px';
             brewSearchListItemCardDiv.style.width = '250px';
-            // brewSearchListItemCardDiv.style.backgroundImage = `url(./assets/images/brewery-generic.jpg)`;
-            // brewSearchListItemCardDiv.style.backgroundImage = `url(./assets/images/${breweryImages[i]}`;
             brewSearchListItemCardDiv.style.backgroundImage = `url(./assets/images/brewery-generic${i}.jpg`;
             brewSearchListItemCardDiv.style.backgroundRepeat = 'none';
             brewSearchListItemCardDiv.style.backgroundPosition = 'center center';
@@ -213,23 +229,24 @@ var loadEventsByCity = function(url, brewUrl) {
         
 };
 
- // controlling how search responds with no new city name
+// controlling how search responds with no new city name
 var searchControl = function() {
 
   // get city value from user input
   var theirSearch = searchTerm.value.trim();
+  
   if(theirSearch) {
 
-    // stops program from creating an empty button when user doesn't input a city
-    var cityButtonValue = theirSearch;
+    // un-comment this if you want to add button when user creates a search
+    // var cityButtonValue = theirSearch;
 
-    var cityButton = document.createElement('button');
-    cityButton.classList = 'btn btn-secondary saved-city';
-    cityButton.textContent = cityButtonValue;
-    cityButton.setAttribute('id', cityButtonValue);
-    cityButton.setAttribute('type', 'submit');
+    // var cityButton = document.createElement('button');
+    // cityButton.classList = 'btn btn-secondary saved-city';
+    // cityButton.textContent = cityButtonValue;
+    // cityButton.setAttribute('id', cityButtonValue);
+    // cityButton.setAttribute('type', 'submit');
 
-    cityButtons.append(cityButton);
+    // cityButtons.append(cityButton);
 
     // save to localStorage
     var savedCityButtons = localStorage.getItem("saved city buttons");
