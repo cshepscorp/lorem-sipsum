@@ -65,25 +65,18 @@ h5 {
   font-size: 12px;
 }
 
-.brew-list {
-  padding: 10px;
-  padding-top:20px;
-  margin-bottom: 6px;
-  margin-right: 10px;
+.brewery-info {
+  font-size: 15px;
+  background-color: rgba(255, 255, 255, 0.75);
+  margin-top: 30px;
+  font-weight: bold;
+  padding-left: 10px;
 }
 
-.brewery-title {
-  font-size: 18px;
-  padding-top:0px
-}
-
-.breweries-section {
-  background-color: #ececec;
-}
 
 @media screen and (max-width:575px) {
   .brew-list {
-    width: 265px;
+    width: 300px;
   }
 
 }

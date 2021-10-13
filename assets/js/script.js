@@ -1,5 +1,3 @@
-// here is my little note for Will
-// YOUR CODE HERE
 var searchTerm = document.querySelector("#searchTerm");
 var searchTerm2;
 
@@ -9,8 +7,8 @@ var eventsSearchResultsEl2 = document.querySelector("#events-search-results2");
 var eventsSearchResultsEl3 = document.querySelector("#events-search-results3");
 
 // API info
-// var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
-var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
+var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
+// var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
 // var dmApi = 'bd8f07fd4ccba45e976bd5aff28bfb08' // Will Api key
 // var dmApi = '0b1da3bd2b6b0219770486baca056a30' // Daniel Api key
 var tmApi = '&apikey=2MALjZsA5tAXCU1xKvJPNTzJVAsqk24J'; // API key ticketmaster CS
@@ -22,25 +20,19 @@ var addHideClass = function() {
   eventsSearchResultsEl3.classList.remove('hide');
 };
 
-console.log('hello there');
-
 // creating empty array to store returned zipcide values from initial search by city to use for restaurant search
 var postalCodeContainer = [];
 
 var loadEventsByCity = function(url, brewUrl) {
-  
       fetch(url)
           .then(function(response) {
             return response.json();
           })
           .then(function(response) {
-
             var univContainer = document.querySelector("#event-response-container");
-
             univContainer.innerHTML = '';
 
-            for(var i = 0; i < 12; i++) {
-              
+            for(var i = 0; i < 10; i++) {
 
               var univSearchReturnListContainer = document.createElement('div');
               univSearchReturnListContainer.classList = "col s12 m12";
@@ -50,7 +42,6 @@ var loadEventsByCity = function(url, brewUrl) {
               univSearchReturnList.classList = "card";
               univSearchReturnList.style.height = '180px';
               univSearchReturnList.style.maxHeight = '210px';
-              // univSearchReturnList.style.width = '300px';
               univSearchReturnListContainer.append(univSearchReturnList);
 
               var univSearchReturnCardDiv = document.createElement('div');
@@ -62,7 +53,6 @@ var loadEventsByCity = function(url, brewUrl) {
               univSearchReturnCardContentDiv.style.backgroundImage = `url('${response._embedded.events[i].images[3].url}')`;
               univSearchReturnCardContentDiv.style.backgroundRepeat = 'none';
               univSearchReturnCardContentDiv.style.backgroundPosition = 'center center';
-              
               univSearchReturnList.append(univSearchReturnCardContentDiv);
 
               var univSearchReturnCardContentP = document.createElement('p');
@@ -111,12 +101,10 @@ var loadEventsByCity = function(url, brewUrl) {
               searchTerm.value = '';
             };
 
-            // Documenu stuff
+          // Documenu stuff
           var dmApiUrl = 'https://api.documenu.com/v2/restaurants/search/fields?&zip_code=' + mostCommonZip;
-          var dmApiUrl =
            
           fetch(dmApiUrl, {
-
                "method": "GET",
                "headers": {
                  "x-api-key": dmApi,
@@ -128,25 +116,20 @@ var loadEventsByCity = function(url, brewUrl) {
               console.log(response);
               return response.json();
             })
-            // .then(function(response) {
-            //   return response.json();
-            // })
             .then(function(response) {
-              
               var restContainer = document.querySelector("#restaurant-response-container-events");
-
               restContainer.innerHTML = '';
 
               for(var i = 0; i < 10; i++) {
-                // console.log(response[i]);
-                
-                
                 var restSearchListItem = document.createElement('div');
                 restSearchListItem.classList ="col";
                 restContainer.append(restSearchListItem);
-                
+
                 var restSearchListItemCardDiv = document.createElement('div');
                 restSearchListItemCardDiv.classList = "col s12 m12 brew-list grey lighten-4 card";
+                restSearchListItemCardDiv.style.backgroundImage = `url(./assets/images/dining-generic.jpg)`;
+                restSearchListItemCardDiv.style.backgroundRepeat = 'none';
+                restSearchListItemCardDiv.style.backgroundPosition = 'center center';
                 restSearchListItemCardDiv.style.height = '180px';
                 restSearchListItem.append(restSearchListItemCardDiv);
       
@@ -174,57 +157,54 @@ var loadEventsByCity = function(url, brewUrl) {
               };
 
           });
-
-          
-
       });
-            
-       
+               
   
   fetch(brewUrl)
       .then(function(response) {
         return response.json();
       })
       .then(function(response) {
-
         var brewContainer = document.querySelector("#brewery-response-container-events");
 
         brewContainer.innerHTML = '';
+        // var breweryImages = ['brewery-generic.jpg', 'brewery-generic2.jpg', 'brewery-generic3.jpg', 'brewery-generic4.jpg', 'brewery-generic5.jpg', 'brewery-generic6.jpg', 'brewery-generic7.jpg', 'brewery-generic8.jpg', 'brewery-generic9.jpg', 'brewery-generic10.jpg'];
         
-        for(var i = 0; i < 10; i++) {
-          // console.log(response[i]);
-          
+        for(var i = 0; i < 11; i++) {
 
-          var brewSearchListItem = document.createElement('div');
-          brewSearchListItem.classList ="col";
-          brewContainer.append(brewSearchListItem);
-          
-          var brewSearchListItemCardDiv = document.createElement('div');
-          brewSearchListItemCardDiv.classList = "col s12 m12 brew-list grey lighten-4 card";
-          brewSearchListItemCardDiv.style.height = '180px';
-          // brewSearchListItemCardDiv.style.width = '100%';
-          brewSearchListItem.append(brewSearchListItemCardDiv);
+          var brewSearchListItemCountry = response[i].country;
+        
+          if (brewSearchListItemCountry === 'United States') {
+            var brewSearchListItem = document.createElement('div');
+            brewSearchListItem.classList ='col';
+            brewContainer.append(brewSearchListItem);
 
-          var brewSearchListItemCardSpan = document.createElement('span');
-          brewSearchListItemCardSpan.classList = "brewery-title";
-          brewSearchListItemCardSpan.textContent = response[i].name;
-          brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
+            var brewSearchListItemCardDiv = document.createElement('div');
+            brewSearchListItemCardDiv.classList = "col s12 m12 grey lighten-4 card breweries-section";
+            brewSearchListItemCardDiv.style.height = '180px';
+            brewSearchListItemCardDiv.style.width = '250px';
+            // brewSearchListItemCardDiv.style.backgroundImage = `url(./assets/images/brewery-generic.jpg)`;
+            // brewSearchListItemCardDiv.style.backgroundImage = `url(./assets/images/${breweryImages[i]}`;
+            brewSearchListItemCardDiv.style.backgroundImage = `url(./assets/images/brewery-generic${i}.jpg`;
+            brewSearchListItemCardDiv.style.backgroundRepeat = 'none';
+            brewSearchListItemCardDiv.style.backgroundPosition = 'center center';
+            brewSearchListItem.append(brewSearchListItemCardDiv);
 
-          var brewSearchListItemCardP = document.createElement('li');
-          brewSearchListItemCardP.textContent = response[i].street
-          brewSearchListItemCardDiv.append(brewSearchListItemCardP);
+            var brewSearchListItemCardSpan = document.createElement('p');
+            brewSearchListItemCardSpan.classList = 'brewery-info';
+            brewSearchListItemCardSpan.innerHTML = response[i].name + `<br />`
+            + `<span class="font-date">Brewery Type: ` + response[i].brewery_type + `</span>` + `<br />`
+            + `<span class="font-date">` + response[i].street + `</span>` + `<br />`
+            + `<span class="font-date">` + response[i].phone + `</span>`;
+            brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
 
-          var brewSearchListItemCardP2 = document.createElement('li');
-          brewSearchListItemCardP2.textContent = response[i].phone;
-          brewSearchListItemCardP2.style.marginBottom = '20px';
-          brewSearchListItemCardDiv.append(brewSearchListItemCardP2);
+            var brewSearchReturnLink = document.createElement('button');
+            brewSearchReturnLink.classList = "btn";
+            brewSearchReturnLink.innerHTML = `<a href="${response[i].website_url}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
+            brewSearchListItemCardDiv.append(brewSearchReturnLink);
 
-          var brewSearchReturnLink = document.createElement('button');
-          brewSearchReturnLink.classList = "btn";
-          brewSearchReturnLink.innerHTML = `<a href="${response[i].website_url}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
-          brewSearchListItemCardDiv.append(brewSearchReturnLink);
-
-          searchTerm.value = '';
+            searchTerm.value = '';
+          }
         };
 
       });
@@ -233,33 +213,30 @@ var loadEventsByCity = function(url, brewUrl) {
 
  // controlling how search responds with no new city name
 var searchControl = function() {
+
+  // get city value from user input
   var theirSearch = searchTerm.value.trim();
+  
   var classification = document.getElementById("classification").value;
  
-  
-  if ( !theirSearch) {
+  if (!theirSearch) {
     theirSearch = searchTerm2;
-
     var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&size=40&countryCode=US&city='
-
       + theirSearch + '&' + tmApi + '&classificationName=' + classification;
 
-      var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
+    var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
   
-
     loadEventsByCity(tmApiUrl, brewApiUrl);
 
   } else {
     searchTerm2 = theirSearch;
 
     var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&size=40&countryCode=US&city='
-
       + theirSearch + '&' + tmApi + '&classificationName=' + classification;
 
-      var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
+    var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
 
     loadEventsByCity(tmApiUrl, brewApiUrl);
-
 
   }
 };
