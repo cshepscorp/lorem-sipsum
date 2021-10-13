@@ -22,6 +22,8 @@ var addHideClass = function() {
   eventsSearchResultsEl3.classList.remove('hide');
 };
 
+console.log('hello there');
+
 // creating empty array to store returned zipcide values from initial search by city to use for restaurant search
 var postalCodeContainer = [];
 
