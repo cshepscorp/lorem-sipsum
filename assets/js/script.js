@@ -6,6 +6,8 @@ var eventsSearchResultsEl = document.querySelector("#events-search-results1");
 var eventsSearchResultsEl2 = document.querySelector("#events-search-results2");
 var eventsSearchResultsEl3 = document.querySelector("#events-search-results3");
 
+var cityButtons = document.querySelector("#city-buttons");
+
 // API info
 var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
 // var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
@@ -216,7 +218,44 @@ var searchControl = function() {
 
   // get city value from user input
   var theirSearch = searchTerm.value.trim();
+  if(theirSearch) {
+
+    // stops program from creating an empty button when user doesn't input a city
+    var cityButtonValue = theirSearch;
+
+    var cityButton = document.createElement('button');
+    cityButton.classList = 'btn btn-secondary saved-city';
+    cityButton.textContent = cityButtonValue;
+    cityButton.setAttribute('id', cityButtonValue);
+    cityButton.setAttribute('type', 'submit');
+
+    cityButtons.append(cityButton);
+
+    // save to localStorage
+    var savedCityButtons = localStorage.getItem("saved city buttons");
+    var savedCities;
+    
+    // if there are no saved scores, create array to save them
+    if(savedCityButtons === null) {
+      savedCities = [];
+    } else {
+      // use JSON.parse to allow array to save stringified values 
+      savedCities = JSON.parse(savedCityButtons);
+    }
+    var savedCityButton = {
+      name: theirSearch
+    };
+
+    savedCities.push(savedCityButton);
+
+    // use JSON.stringify to allow local storage to save values 
+    var savedCitiesString = JSON.stringify(savedCities);
+    window.localStorage.setItem("saved city buttons", savedCitiesString)
+
+  } else {
+    alert("Please enter a valid city name")
   
+  }
   var classification = document.getElementById("classification").value;
  
   if (!theirSearch) {
