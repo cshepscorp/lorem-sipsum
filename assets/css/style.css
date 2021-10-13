@@ -6,7 +6,7 @@
  * Made By MaterializeCSS.com
  */
 
-:root {
+ :root {
   --primary: #009cde ;
   --secondary: #fb0;
 }
@@ -15,10 +15,24 @@ body {
   line-height: 1.15;
 }
 
+li {
+  list-style-type: none;
+  margin: 0;
+  padding-top: 10px;
+}
+
+p {
+  padding-top:5px!important;
+  padding-bottom:5px!important;
+}
+
 .white-text {
   color: #FFF!important;
 }
-.h5 {
+h3 {
+  padding-bottom: 20px;
+}
+h5 {
   color: #000;
 }
 .nav-new {
@@ -47,8 +61,13 @@ body {
 	font-size: inherit;
 }
 
+.font-date {
+  font-size: 12px;
+}
+
 .brew-list {
   padding: 10px;
+  padding-top:20px;
   margin-bottom: 6px;
   margin-right: 10px;
 }
@@ -60,4 +79,11 @@ body {
 
 .breweries-section {
   background-color: #ececec;
+}
+
+@media screen and (max-width:575px) {
+  .brew-list {
+    width: 265px;
+  }
+
 }
