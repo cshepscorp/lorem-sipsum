@@ -1,7 +1,7 @@
 // here is my little note for Will
 // YOUR CODE HERE
 var searchTerm = document.querySelector("#searchTerm");
-var searchTerm2 = document.querySelector("#searchTerm2");
+var searchTerm2;
 
 var eventsButton = document.querySelector("#events-button");
 var eventsSearchResultsEl = document.querySelector("#events-search-results1");
@@ -9,8 +9,10 @@ var eventsSearchResultsEl2 = document.querySelector("#events-search-results2");
 var eventsSearchResultsEl3 = document.querySelector("#events-search-results3");
 
 // API info
-var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
-// var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
+// var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
+var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
+// var dmApi = 'bd8f07fd4ccba45e976bd5aff28bfb08' // Will Api key
+// var dmApi = '0b1da3bd2b6b0219770486baca056a30' // Daniel Api key
 var tmApi = '&apikey=2MALjZsA5tAXCU1xKvJPNTzJVAsqk24J'; // API key ticketmaster CS
 
 var addHideClass = function() {
@@ -23,21 +25,26 @@ var addHideClass = function() {
 // creating empty array to store returned zipcide values from initial search by city to use for restaurant search
 var postalCodeContainer = [];
 
-var loadEventsByCity = function() {
-  var theirSearch = searchTerm.value.trim();
-  var classification = document.getElementById("classification").value;
+var loadEventsByCity = function(url, brewUrl) {
+  // var theirSearch = searchTerm.value.trim();
+  // var classification = document.getElementById("classification").value;
  
-      var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&size=40&countryCode=US&city='
-      + theirSearch + '&classificationName=' + classification + '&' + tmApi;
+  //     var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&size=40&countryCode=US&city='
 
-      fetch(tmApiUrl)
+  //     + theirSearch + '&' + tmApi + '&classificationName=' + classification;
+
+      fetch(url)
           .then(function(response) {
             return response.json();
           })
           .then(function(response) {
 
+            var univContainer = document.querySelector("#event-response-container");
+
+            univContainer.innerHTML = '';
+
             for(var i = 0; i < 12; i++) {
-              var univContainer = document.querySelector("#event-response-container");
+              
 
               var univSearchReturnListContainer = document.createElement('div');
               univSearchReturnListContainer.classList = "col s12 m12";
@@ -113,14 +120,15 @@ var loadEventsByCity = function() {
 
             // Documenu stuff
           var dmApiUrl = 'https://api.documenu.com/v2/restaurants/search/fields?&zip_code=' + mostCommonZip;
-
-          // fetch(dmApiUrl)
+          var dmApiUrl =
+           
           fetch(dmApiUrl, {
-              "method": "GET",
-              "headers": {
-                "x-api-key": dmApi,
-                "x-rapidapi-host": "documenu.p.rapidapi.com",
-                "x-rapidapi-key": "64257fa8d8mshadaafd031c3689fp12cff3jsn0e2233fd401f"
+
+               "method": "GET",
+               "headers": {
+                 "x-api-key": dmApi,
+                 "x-rapidapi-host": "documenu.p.rapidapi.com",
+                 "x-rapidapi-key": "64257fa8d8mshadaafd031c3689fp12cff3jsn0e2233fd401f"
               }
             })
             .then(response => {
@@ -131,10 +139,14 @@ var loadEventsByCity = function() {
             //   return response.json();
             // })
             .then(function(response) {
+              
+              var restContainer = document.querySelector("#restaurant-response-container-events");
+
+              restContainer.innerHTML = '';
 
               for(var i = 0; i < 10; i++) {
                 // console.log(response[i]);
-                var restContainer = document.querySelector("#restaurant-response-container-events");
+                
                 
                 var restSearchListItem = document.createElement('div');
                 restSearchListItem.classList ="col";
@@ -174,17 +186,21 @@ var loadEventsByCity = function() {
 
       });
             
-       var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
+       
   
-  fetch(brewApiUrl)
+  fetch(brewUrl)
       .then(function(response) {
         return response.json();
       })
       .then(function(response) {
+
+        var brewContainer = document.querySelector("#brewery-response-container-events");
+
+        brewContainer.innerHTML = '';
         
         for(var i = 0; i < 10; i++) {
           // console.log(response[i]);
-          var brewContainer = document.querySelector("#brewery-response-container-events");
+          
 
           var brewSearchListItem = document.createElement('div');
           brewSearchListItem.classList ="col";
@@ -222,92 +238,124 @@ var loadEventsByCity = function() {
         
 };
 
-var loadBreweriesByCity = function() {
-  // var rating = document.getElementById("rating").value;
-  var theirSearch = searchTerm2.value.trim();
+// var loadBreweriesByCity = function() {
+//   // var rating = document.getElementById("rating").value;
+//   var theirSearch = searchTerm2.value.trim();
  
-  var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
+//   var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
   
-  fetch(brewApiUrl)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(response) {
+//   fetch(brewApiUrl)
+//       .then(function(response) {
+//         return response.json();
+//       })
+//       .then(function(response) {
         
-        for(var i = 0; i < 12; i++) {
-          // console.log(response[i]);
-          var brewContainer = document.querySelector("#brewery-response-container");
+//         for(var i = 0; i < 12; i++) {
+//           // console.log(response[i]);
+//           var brewContainer = document.querySelector("#brewery-response-container");
           
-          var brewSearchListItem = document.createElement('div');
-          brewSearchListItem.classList ="col s12 m4";
-          brewContainer.append(brewSearchListItem);
+//           var brewSearchListItem = document.createElement('div');
+//           brewSearchListItem.classList ="col s12 m4";
+//           brewContainer.append(brewSearchListItem);
           
-          var brewSearchListItemCardDiv = document.createElement('div');
-          brewSearchListItemCardDiv.classList = "brew-list grey lighten-4 card";
-          brewSearchListItemCardDiv.style.height = '180px';
-          brewSearchListItem.append(brewSearchListItemCardDiv);
+//           var brewSearchListItemCardDiv = document.createElement('div');
+//           brewSearchListItemCardDiv.classList = "brew-list grey lighten-4 card";
+//           brewSearchListItemCardDiv.style.height = '180px';
+//           brewSearchListItem.append(brewSearchListItemCardDiv);
 
-          var brewSearchListItemCardSpan = document.createElement('span');
-          brewSearchListItemCardSpan.classList = "brewery-title";
-          brewSearchListItemCardSpan.textContent = response[i].name;
-          brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
+//           var brewSearchListItemCardSpan = document.createElement('span');
+//           brewSearchListItemCardSpan.classList = "brewery-title";
+//           brewSearchListItemCardSpan.textContent = response[i].name;
+//           brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
 
-          var brewSearchListItemCardP = document.createElement('li');
-          brewSearchListItemCardP.textContent = response[i].street;
-          brewSearchListItemCardDiv.append(brewSearchListItemCardP);
+//           var brewSearchListItemCardP = document.createElement('li');
+//           brewSearchListItemCardP.textContent = response[i].street;
+//           brewSearchListItemCardDiv.append(brewSearchListItemCardP);
 
-          var brewSearchListItemCardP2 = document.createElement('li');
-          brewSearchListItemCardP2.textContent = response[i].phone;
-          brewSearchListItemCardP2.style.marginBottom = '10px';
-          brewSearchListItemCardDiv.append(brewSearchListItemCardP2);
+//           var brewSearchListItemCardP2 = document.createElement('li');
+//           brewSearchListItemCardP2.textContent = response[i].phone;
+//           brewSearchListItemCardP2.style.marginBottom = '10px';
+//           brewSearchListItemCardDiv.append(brewSearchListItemCardP2);
 
-          var brewSearchReturnLink = document.createElement('button');
-          brewSearchReturnLink.classList = "btn";
-          brewSearchReturnLink.innerHTML = `<a href="${response[i].website_url}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
-          brewSearchListItemCardDiv.append(brewSearchReturnLink);
+//           var brewSearchReturnLink = document.createElement('button');
+//           brewSearchReturnLink.classList = "btn";
+//           brewSearchReturnLink.innerHTML = `<a href="${response[i].website_url}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
+//           brewSearchListItemCardDiv.append(brewSearchReturnLink);
 
-          searchTerm2.value = '';
-        };
+//           searchTerm2.value = '';
+//         };
 
-      });
+//       });
         
-};
-var appendControlEvent = function() {
-  var eventContainerEl = document.querySelector('#event-response-container');
-  eventContainerEl.classList.add('check-class');
+// };
+// var appendControlEvent = function() {
+//   var eventContainerEl = document.querySelector('#event-response-container');
+//   eventContainerEl.classList.add('check-class');
 
-  var eventBreweryContainerEl = document.querySelector('#brewery-response-container-events');
-  eventBreweryContainerEl.classList.add('check-class');
+//   var eventBreweryContainerEl = document.querySelector('#brewery-response-container-events');
+//   eventBreweryContainerEl.classList.add('check-class');
 
-  var checkEvents = eventContainerEl.getAttribute('class');
-  var checkEventsBrew = eventBreweryContainerEl.getAttribute('class');
+//   var checkEvents = eventContainerEl.getAttribute('class');
+//   var checkEventsBrew = eventBreweryContainerEl.getAttribute('class');
 
-  if (!checkEvents && !checkEventsBrew) {
-    loadEventsByCity();
+//   if (!checkEvents && !checkEventsBrew) {
+//     loadEventsByCity();
+//   } else {
+//     eventContainerEl.innerHTML = '';
+//     eventBreweryContainerEl.innerHTML = '';
+
+//     loadEventsByCity();
+//   };
+
+// };
+
+
+// var appendControlBrewery = function() {
+//   var brewContainerEl = document.querySelector('#brewery-response-container');
+//   brewContainerEl.classList.add('check-class');
+//   console.log(brewContainerEl);
+
+//   var checkBrew = brewContainerEl.getAttribute('class')
+
+//   if (!checkBrew) {
+//     loadBreweriesByCity
+//   } else {
+//     brewContainerEl.innerHTML = '';
+
+//     loadBreweriesByCity();
+//   };
+// };
+
+var searchControl = function() {
+  var theirSearch = searchTerm.value.trim();
+  var classification = document.getElementById("classification").value;
+ 
+  
+  if ( !theirSearch) {
+    theirSearch = searchTerm2;
+
+    var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&size=40&countryCode=US&city='
+
+      + theirSearch + '&' + tmApi + '&classificationName=' + classification;
+
+      var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
+  
+
+    loadEventsByCity(tmApiUrl, brewApiUrl);
+
   } else {
-    eventContainerEl.innerHTML = '';
-    eventBreweryContainerEl.innerHTML = '';
+    searchTerm2 = theirSearch;
 
-    loadEventsByCity();
-  };
+    var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&size=40&countryCode=US&city='
 
-};
+      + theirSearch + '&' + tmApi + '&classificationName=' + classification;
+
+      var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
+
+    loadEventsByCity(tmApiUrl, brewApiUrl);
 
 
-var appendControlBrewery = function() {
-  var brewContainerEl = document.querySelector('#brewery-response-container');
-  brewContainerEl.classList.add('check-class');
-  console.log(brewContainerEl);
-
-  var checkBrew = brewContainerEl.getAttribute('class')
-
-  if (!checkBrew) {
-    loadBreweriesByCity
-  } else {
-    brewContainerEl.innerHTML = '';
-
-    loadBreweriesByCity();
-  };
+  }
 };
 
 eventsButton.addEventListener("click", addHideClass);
