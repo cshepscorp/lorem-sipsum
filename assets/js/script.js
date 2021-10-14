@@ -7,11 +7,12 @@ var eventsSearchResultsEl2 = document.querySelector("#events-search-results2");
 var eventsSearchResultsEl3 = document.querySelector("#events-search-results3");
 
 var cityButtons = document.querySelector("#city-buttons");
+var eventResultsLength = 0;
 
 // API info
 // var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
-var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
-// var dmApi = 'bd8f07fd4ccba45e976bd5aff28bfb08' // Will Api key
+// var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
+var dmApi = 'bd8f07fd4ccba45e976bd5aff28bfb08' // Will Api key
 // var dmApi = '0b1da3bd2b6b0219770486baca056a30' // Daniel Api key
 var tmApi = '&apikey=2MALjZsA5tAXCU1xKvJPNTzJVAsqk24J'; // API key ticketmaster CS
 
@@ -94,7 +95,10 @@ var loadEventsByCity = function(url, brewUrl) {
               univSearchReturnList.append(univSearchReturnCardActionLink);
 
               searchTerm.value = '';
+              ;
             };
+
+            
 
           // Documenu stuff
           var dmApiUrl = 'https://api.documenu.com/v2/restaurants/search/fields?&zip_code=' + mostCommonZip;
@@ -115,7 +119,7 @@ var loadEventsByCity = function(url, brewUrl) {
               var restContainer = document.querySelector("#restaurant-response-container-events");
               restContainer.innerHTML = '';
 
-              for(var i = 0; i < 10; i++) {
+              for(var i = 0; i < postalCodeContainer.length; i++) {
                 var restSearchListItem = document.createElement('div');
                 restSearchListItem.classList ="col";
                 restContainer.append(restSearchListItem);
@@ -186,11 +190,12 @@ var loadEventsByCity = function(url, brewUrl) {
       })
       .then(function(response) {
         var brewContainer = document.querySelector("#brewery-response-container-events");
-
+        
+      
         brewContainer.innerHTML = '';
         // var breweryImages = ['brewery-generic.jpg', 'brewery-generic2.jpg', 'brewery-generic3.jpg', 'brewery-generic4.jpg', 'brewery-generic5.jpg', 'brewery-generic6.jpg', 'brewery-generic7.jpg', 'brewery-generic8.jpg', 'brewery-generic9.jpg', 'brewery-generic10.jpg'];
         
-        for(var i = 0; i < 11; i++) {
+        for(var i = 0; i < 10; i++) {
 
           var brewSearchListItemCountry = response[i].country;
         
