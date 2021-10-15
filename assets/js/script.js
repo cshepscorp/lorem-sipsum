@@ -8,16 +8,16 @@ var eventsSearchResultsEl3 = document.querySelector("#events-search-results3");
 
 var cityButtons = document.querySelector("#city-buttons");
 var eventResultsLength = 0;
+var cityButton;
 
 // API info
 // var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
 // var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
-var dmApi = 'bd8f07fd4ccba45e976bd5aff28bfb08' // Will Api key
+// var dmApi = 'bd8f07fd4ccba45e976bd5aff28bfb08' // Will Api key
 // var dmApi = '0b1da3bd2b6b0219770486baca056a30' // Daniel Api key
 var tmApi = '&apikey=2MALjZsA5tAXCU1xKvJPNTzJVAsqk24J'; // API key ticketmaster CS
 
-var addHideClass = function() {
-  console.log('events button was clicked');
+var removeHideClass = function() {
   eventsSearchResultsEl.classList.remove('hide');
   eventsSearchResultsEl2.classList.remove('hide');
   eventsSearchResultsEl3.classList.remove('hide');
@@ -38,13 +38,12 @@ var loadEventsByCity = function(url, brewUrl) {
             for(var i = 0; i < 10; i++) {
 
               var univSearchReturnListContainer = document.createElement('div');
-              univSearchReturnListContainer.classList = "col";
+              univSearchReturnListContainer.classList = "col l12 s12";
               univContainer.append(univSearchReturnListContainer);
 
               var univSearchReturnList = document.createElement('div');
-              univSearchReturnList.classList = "col s12 m12 grey lighten-4 card";
+              univSearchReturnList.classList = "col s12 grey lighten-4 card";
               univSearchReturnList.style.height = '180px';
-              univSearchReturnList.style.width = '250px';
               univSearchReturnList.style.backgroundImage = `url('${response._embedded.events[i].images[3].url}')`;
               univSearchReturnList.style.backgroundRepeat = 'none';
               univSearchReturnList.style.backgroundPosition = 'center center';
@@ -87,7 +86,6 @@ var loadEventsByCity = function(url, brewUrl) {
               }
               
               var mostCommonZip = findMostFrequent(postalCodeContainer); 
-              // console.log(mostCommonZip + ' is the most common zip');
 
               var univSearchReturnCardActionLink = document.createElement('button');
               univSearchReturnCardActionLink.classList = "btn";
@@ -97,8 +95,6 @@ var loadEventsByCity = function(url, brewUrl) {
               searchTerm.value = '';
               ;
             };
-
-            
 
           // Documenu stuff
           var dmApiUrl = 'https://api.documenu.com/v2/restaurants/search/fields?&zip_code=' + mostCommonZip;
@@ -121,14 +117,13 @@ var loadEventsByCity = function(url, brewUrl) {
 
               for(var i = 0; i < postalCodeContainer.length; i++) {
                 var restSearchListItem = document.createElement('div');
-                restSearchListItem.classList ="col";
+                restSearchListItem.classList ="col l12 s12";
                 restContainer.append(restSearchListItem);
 
+                // change background image of listing based on type of cuisine
                 var cuisineType = response.data[i].cuisines[0];
                 var cuisineType2 = response.data[i].cuisines[1];
-                // console.log(cuisineType, cuisineType2);
 
-                // change background of listing based on type of cuisine
                 if (cuisineType.includes('Burgers')) {
                   cuisineType = 'burgers' 
                 } else if (cuisineType.includes('American')) { 
@@ -138,7 +133,11 @@ var loadEventsByCity = function(url, brewUrl) {
                 } else if (cuisineType.includes('Japanese')) { 
                   cuisineType = 'japanese'
                 } else if (cuisineType.includes('Italian')) { 
-                  cuisineType = 'italian'  
+                  cuisineType = 'italian'
+                } else if (cuisineType.includes('Mexican')) { 
+                  cuisineType = 'mexican'
+                } else if (cuisineType.includes('Sandwiches')) { 
+                  cuisineType = 'sandwiches'  
                 } else {
                   cuisineType = 'dining-generic'
                 }
@@ -146,19 +145,25 @@ var loadEventsByCity = function(url, brewUrl) {
                 if(cuisineType2) {
                   if (cuisineType2.includes('Mexican')) {
                     cuisineType = 'mexican'
+                  } else if (cuisineType2.includes('Burgers')) {
+                    cuisineType = 'burgers'
                   } else if (cuisineType2.includes('Steak')) {
                     cuisineType = 'steak'
+                  } else if (cuisineType2.includes('Chicken')) {
+                    cuisineType = 'chicken'
                   } else if (cuisineType2.includes('Sandwiches')) {
                     cuisineType = 'sandwiches' 
                   } else if (cuisineType2.includes('Irish')) {
-                    cuisineType = 'irish' 
+                    cuisineType = 'irish'
+                  } else if (cuisineType2.includes('Coffee')) {
+                    cuisineType = 'coffee' 
                   } else {
                     cuisineType = 'dining-generic'
                   }
                 } 
 
                 var restSearchListItemCardDiv = document.createElement('div');
-                restSearchListItemCardDiv.classList = `col s12 m12 brew-list grey lighten-4 card ${cuisineType}`;
+                restSearchListItemCardDiv.classList = `col s12 grey lighten-4 card ${cuisineType}`;
                 restSearchListItemCardDiv.style.backgroundRepeat = 'none';
                 restSearchListItemCardDiv.style.backgroundPosition = 'center center';
                 restSearchListItemCardDiv.style.height = '180px';
@@ -190,10 +195,8 @@ var loadEventsByCity = function(url, brewUrl) {
       })
       .then(function(response) {
         var brewContainer = document.querySelector("#brewery-response-container-events");
-        
       
         brewContainer.innerHTML = '';
-        // var breweryImages = ['brewery-generic.jpg', 'brewery-generic2.jpg', 'brewery-generic3.jpg', 'brewery-generic4.jpg', 'brewery-generic5.jpg', 'brewery-generic6.jpg', 'brewery-generic7.jpg', 'brewery-generic8.jpg', 'brewery-generic9.jpg', 'brewery-generic10.jpg'];
         
         for(var i = 0; i < 10; i++) {
 
@@ -201,13 +204,12 @@ var loadEventsByCity = function(url, brewUrl) {
         
           if (brewSearchListItemCountry === 'United States') {
             var brewSearchListItem = document.createElement('div');
-            brewSearchListItem.classList ='col';
+            brewSearchListItem.classList ='col l12 s12';
             brewContainer.append(brewSearchListItem);
 
             var brewSearchListItemCardDiv = document.createElement('div');
-            brewSearchListItemCardDiv.classList = "col s12 m12 grey lighten-4 card breweries-section";
+            brewSearchListItemCardDiv.classList = "col s12 grey lighten-4 card";
             brewSearchListItemCardDiv.style.height = '180px';
-            brewSearchListItemCardDiv.style.width = '250px';
             brewSearchListItemCardDiv.style.backgroundImage = `url(./assets/images/brewery-generic${i}.jpg`;
             brewSearchListItemCardDiv.style.backgroundRepeat = 'none';
             brewSearchListItemCardDiv.style.backgroundPosition = 'center center';
@@ -234,6 +236,8 @@ var loadEventsByCity = function(url, brewUrl) {
         
 };
 
+
+
 // controlling how search responds with no new city name
 var searchControl = function() {
 
@@ -249,9 +253,11 @@ var searchControl = function() {
     // cityButton.classList = 'btn btn-secondary saved-city';
     // cityButton.textContent = cityButtonValue;
     // cityButton.setAttribute('id', cityButtonValue);
+    // cityButton.setAttribute('onclick', 'searchControl()');
     // cityButton.setAttribute('type', 'submit');
+    //cityButton.innerHTML = `<a onclick="searchControl()" class="saved-city white-text" id="${cityButtonValue}">${cityButtonValue}</a>`;
 
-    // cityButtons.append(cityButton);
+    cityButtons.append(cityButton);
 
     // save to localStorage
     var savedCityButtons = localStorage.getItem("saved city buttons");
@@ -274,10 +280,8 @@ var searchControl = function() {
     var savedCitiesString = JSON.stringify(savedCities);
     window.localStorage.setItem("saved city buttons", savedCitiesString)
 
-  } else {
-    alert("Please enter a valid city name")
-  
   }
+
   var classification = document.getElementById("classification").value;
  
   if (!theirSearch) {
@@ -302,4 +306,6 @@ var searchControl = function() {
   }
 };
 
-eventsButton.addEventListener("click", addHideClass);
+
+eventsButton.addEventListener("click", removeHideClass);
+

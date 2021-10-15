@@ -29,15 +29,23 @@ p {
 .white-text {
   color: #FFF!important;
 }
+
 h3 {
   padding-bottom: 20px;
 }
+
 h5 {
   color: #000;
 }
+
 .nav-new {
   background-color: var(--primary);
 }
+
+.saved-city {
+  text-decoration: underline;
+}
+
 .bg-image {
   background: url(../images/hero-city-night.png);
   background-color: #000;
@@ -83,6 +91,14 @@ h5 {
 
 .burgers {
   background-image: url(../images/burgers.jpg);
+}
+
+.chicken {
+  background-image: url(../images/chicken.jpg);
+}
+
+.coffee {
+  background-image: url(../images/coffee.jpg);
 }
 
 .irish {
