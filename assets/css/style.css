@@ -42,8 +42,12 @@ h5 {
   background-color: var(--primary);
 }
 
+#city-buttons {
+  padding-bottom: 6px;
+}
+
 .saved-city {
-  text-decoration: underline;
+  padding-right: 6px;
 }
 
 .bg-image {

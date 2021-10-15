@@ -1,5 +1,5 @@
-var searchTerm = document.querySelector("#searchTerm");
 var searchTerm2;
+var searchTerm = document.querySelector("#searchTerm");
 
 var eventsButton = document.querySelector("#events-button");
 var eventsSearchResultsEl = document.querySelector("#events-search-results1");
@@ -236,7 +236,215 @@ var loadEventsByCity = function(url, brewUrl) {
         
 };
 
+var loadEventsByCity2 = function(url, brewUrl) {
+  fetch(url)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(response) {
+        var univContainer = document.querySelector("#event-response-container");
+        univContainer.innerHTML = '';
 
+        for(var i = 0; i < 10; i++) {
+
+          var univSearchReturnListContainer = document.createElement('div');
+          univSearchReturnListContainer.classList = "col l12 s12";
+          univContainer.append(univSearchReturnListContainer);
+
+          var univSearchReturnList = document.createElement('div');
+          univSearchReturnList.classList = "col s12 grey lighten-4 card";
+          univSearchReturnList.style.height = '180px';
+          univSearchReturnList.style.backgroundImage = `url('${response._embedded.events[i].images[3].url}')`;
+          univSearchReturnList.style.backgroundRepeat = 'none';
+          univSearchReturnList.style.backgroundPosition = 'center center';
+          univSearchReturnListContainer.append(univSearchReturnList);
+
+          // var genre = response._embedded.events[i].classifications[0].genre.name;
+          //var health = response._embedded.events[i].ticketing.healthCheck.summary;
+
+          var univSearchReturnCardContentDiv = document.createElement('p');
+          univSearchReturnCardContentDiv.classList = "brewery-info";
+          univSearchReturnCardContentDiv.innerHTML = response._embedded.events[i].name + `<br />` 
+          + `<span class="font-date">` + response._embedded.events[i].dates.start.localDate + `</span>`
+          //+ `<br />` + `<span class="font-date">Please note: ` + health + `</span>` +
+          + `<br />` + `<span class="font-date">` + response._embedded.events[i]._embedded.venues[0].name + `</span>`;
+
+          univSearchReturnList.append(univSearchReturnCardContentDiv);
+
+          var univSearchReturnZip = response._embedded.events[i]._embedded.venues[0].postalCode;
+          postalCodeContainer.push(univSearchReturnZip);
+
+          function findMostFrequent(postalCodeContainer) {
+            let mf = 1;
+            let m = 0;
+            let item;
+          
+            for (let i = 0; i < postalCodeContainer.length; i++) {
+              for (let j = i; j < postalCodeContainer.length; j++) {
+                if (postalCodeContainer[i] == postalCodeContainer[j]) {
+                  m++;
+                  if (m > mf) {
+                    mf = m;
+                    item = postalCodeContainer[i];
+                  }
+                }
+              }
+              m = 0;
+            }
+          
+            return item;
+          }
+          
+          var mostCommonZip = findMostFrequent(postalCodeContainer); 
+
+          var univSearchReturnCardActionLink = document.createElement('button');
+          univSearchReturnCardActionLink.classList = "btn";
+          univSearchReturnCardActionLink.innerHTML = `<a href="${response._embedded.events[i].url}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
+          univSearchReturnList.append(univSearchReturnCardActionLink);
+
+          searchTerm.value = '';
+          ;
+        };
+
+      // Documenu stuff
+      var dmApiUrl = 'https://api.documenu.com/v2/restaurants/search/fields?&zip_code=' + mostCommonZip;
+       
+      fetch(dmApiUrl, {
+           "method": "GET",
+           "headers": {
+             "x-api-key": dmApi,
+             "x-rapidapi-host": "documenu.p.rapidapi.com",
+             "x-rapidapi-key": "64257fa8d8mshadaafd031c3689fp12cff3jsn0e2233fd401f"
+          }
+        })
+        .then(response => {
+          console.log(response);
+          return response.json();
+        })
+        .then(function(response) {
+          var restContainer = document.querySelector("#restaurant-response-container-events");
+          restContainer.innerHTML = '';
+
+          for(var i = 0; i < postalCodeContainer.length; i++) {
+            var restSearchListItem = document.createElement('div');
+            restSearchListItem.classList ="col l12 s12";
+            restContainer.append(restSearchListItem);
+
+            // change background image of listing based on type of cuisine
+            var cuisineType = response.data[i].cuisines[0];
+            var cuisineType2 = response.data[i].cuisines[1];
+
+            if (cuisineType.includes('Burgers')) {
+              cuisineType = 'burgers' 
+            } else if (cuisineType.includes('American')) { 
+              cuisineType = 'american'
+            } else if (cuisineType.includes('Asian')) { 
+              cuisineType = 'asian'
+            } else if (cuisineType.includes('Japanese')) { 
+              cuisineType = 'japanese'
+            } else if (cuisineType.includes('Italian')) { 
+              cuisineType = 'italian'
+            } else if (cuisineType.includes('Mexican')) { 
+              cuisineType = 'mexican'
+            } else if (cuisineType.includes('Sandwiches')) { 
+              cuisineType = 'sandwiches'  
+            } else {
+              cuisineType = 'dining-generic'
+            }
+
+            if(cuisineType2) {
+              if (cuisineType2.includes('Mexican')) {
+                cuisineType = 'mexican'
+              } else if (cuisineType2.includes('Burgers')) {
+                cuisineType = 'burgers'
+              } else if (cuisineType2.includes('Steak')) {
+                cuisineType = 'steak'
+              } else if (cuisineType2.includes('Chicken')) {
+                cuisineType = 'chicken'
+              } else if (cuisineType2.includes('Sandwiches')) {
+                cuisineType = 'sandwiches' 
+              } else if (cuisineType2.includes('Irish')) {
+                cuisineType = 'irish'
+              } else if (cuisineType2.includes('Coffee')) {
+                cuisineType = 'coffee' 
+              } else {
+                cuisineType = 'dining-generic'
+              }
+            } 
+
+            var restSearchListItemCardDiv = document.createElement('div');
+            restSearchListItemCardDiv.classList = `col s12 grey lighten-4 card ${cuisineType}`;
+            restSearchListItemCardDiv.style.backgroundRepeat = 'none';
+            restSearchListItemCardDiv.style.backgroundPosition = 'center center';
+            restSearchListItemCardDiv.style.height = '180px';
+            restSearchListItem.append(restSearchListItemCardDiv);
+  
+            var restSearchListItemCardSpan = document.createElement('p');
+            restSearchListItemCardSpan.classList = "brewery-info";
+            restSearchListItemCardSpan.innerHTML = response.data[i].restaurant_name + `<br />`
+            + `<span class="font-date">` + response.data[i].address.formatted + `</span>` + `<br />`
+            + `<span class="font-date">` + response.data[i].restaurant_phone + `</span>`;
+            console.log('restSearchListItemCardSpan is ' + restSearchListItemCardSpan);
+            restSearchListItemCardDiv.append(restSearchListItemCardSpan);
+  
+            var restSearchReturnLink = document.createElement('button');
+            restSearchReturnLink.classList = "btn";
+            restSearchReturnLink.innerHTML = `<a href="${response.data[i].restaurant_website}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
+            restSearchListItemCardDiv.append(restSearchReturnLink);
+  
+            searchTerm.value = '';
+          };
+
+      });
+  });
+           
+
+fetch(brewUrl)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    var brewContainer = document.querySelector("#brewery-response-container-events");
+  
+    brewContainer.innerHTML = '';
+    
+    for(var i = 0; i < 10; i++) {
+
+      var brewSearchListItemCountry = response[i].country;
+    
+      if (brewSearchListItemCountry === 'United States') {
+        var brewSearchListItem = document.createElement('div');
+        brewSearchListItem.classList ='col l12 s12';
+        brewContainer.append(brewSearchListItem);
+
+        var brewSearchListItemCardDiv = document.createElement('div');
+        brewSearchListItemCardDiv.classList = "col s12 grey lighten-4 card";
+        brewSearchListItemCardDiv.style.height = '180px';
+        brewSearchListItemCardDiv.style.backgroundImage = `url(./assets/images/brewery-generic${i}.jpg`;
+        brewSearchListItemCardDiv.style.backgroundRepeat = 'none';
+        brewSearchListItemCardDiv.style.backgroundPosition = 'center center';
+        brewSearchListItem.append(brewSearchListItemCardDiv);
+
+        var brewSearchListItemCardSpan = document.createElement('p');
+        brewSearchListItemCardSpan.classList = 'brewery-info';
+        brewSearchListItemCardSpan.innerHTML = response[i].name + `<br />`
+        + `<span class="font-date">Brewery Type: ` + response[i].brewery_type + `</span>` + `<br />`
+        + `<span class="font-date">` + response[i].street + `</span>` + `<br />`
+        + `<span class="font-date">` + response[i].phone + `</span>`;
+        brewSearchListItemCardDiv.append(brewSearchListItemCardSpan);
+
+        var brewSearchReturnLink = document.createElement('button');
+        brewSearchReturnLink.classList = "btn";
+        brewSearchReturnLink.innerHTML = `<a href="${response[i].website_url}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
+        brewSearchListItemCardDiv.append(brewSearchReturnLink);
+
+        searchTerm.value = '';
+      }
+    };
+
+  });
+    
+};
 
 // controlling how search responds with no new city name
 var searchControl = function() {
@@ -247,15 +455,15 @@ var searchControl = function() {
   if(theirSearch) {
 
     // un-comment this if you want to add button when user creates a search
-    // var cityButtonValue = theirSearch;
+    var cityButtonValue = theirSearch;
 
-    // var cityButton = document.createElement('button');
-    // cityButton.classList = 'btn btn-secondary saved-city';
-    // cityButton.textContent = cityButtonValue;
-    // cityButton.setAttribute('id', cityButtonValue);
-    // cityButton.setAttribute('onclick', 'searchControl()');
-    // cityButton.setAttribute('type', 'submit');
-    //cityButton.innerHTML = `<a onclick="searchControl()" class="saved-city white-text" id="${cityButtonValue}">${cityButtonValue}</a>`;
+    var cityButton = document.createElement('span');
+    cityButton.classList = 'saved-city';
+    //cityButton.textContent = cityButtonValue;
+    cityButton.setAttribute('id', cityButtonValue);
+    //cityButton.setAttribute('onclick', 'searchControl2()');
+    //cityButton.setAttribute('type', 'submit');
+    cityButton.innerHTML = `<button class="saveBtn" id="${cityButtonValue}">${cityButtonValue}</button>`;
 
     cityButtons.append(cityButton);
 
@@ -304,6 +512,37 @@ var searchControl = function() {
     loadEventsByCity(tmApiUrl, brewApiUrl);
 
   }
+};
+
+var cityId;
+
+$(document).on('click','.saveBtn',function(){
+  //event.preventDefault();
+  // console.log('saveBtn is being clicked')
+  // alert($(this).parent().attr("id"))
+  cityId = $(this).parent().attr("id");
+  //var task = $(this).siblings("textarea").val();
+  console.log(cityId + ' is cityId');
+  //localStorage.setItem(time, task);
+  searchControl2();
+
+}); 
+
+var searchControl2 = function() {
+  console.log('searchcontrol2 id loading')
+  // console.log(savedCityButtonValue + ' is the saved city value');
+  var theirSearch = cityId;
+  console.log(theirSearch + ' is their search term');
+
+  var classification = document.getElementById("classification").value;
+ 
+    var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&size=40&countryCode=US&city='
+      + theirSearch + '&' + tmApi + '&classificationName=' + classification;
+
+    var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
+
+    loadEventsByCity(tmApiUrl, brewApiUrl);
+
 };
 
 
