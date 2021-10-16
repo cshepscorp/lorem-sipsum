@@ -12,6 +12,7 @@ Your location search will be run against 3 different public API's
 - Ticketmaster
 - Documenu
 - OpenBreweriesDB
+
 Your desired event type search will be passed off to the Ticketmaster filtering in place and will return results for nearby Restaraunts and Breweries based on those event results. These will be displayed in easy to view cards in columns down the page.
 
 ### Plans for the future
@@ -20,6 +21,8 @@ A few ideas that are in the making-
 2. Time based Itenerary planning element
 3. Reservation Widget like OpenTable
 4. "See More" option for list of results
+
+https://cshepscorp.github.io/lorem-sipsum/
 
 
 #### Made with care by Will Brent, Christina Sheppard and Daniel Wilkinson.
