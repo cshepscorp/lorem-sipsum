@@ -31,6 +31,7 @@ var removeHideClass = function() {
 var postalCodeContainer = [];
 
 var loadEventsByCity = function(url, brewUrl) {
+  removeHideClass();
   fetch(url)  
       .then(function(response) {
          return response.json();
@@ -329,13 +330,12 @@ var searchControl = function() {
     //cityButton.setAttribute('onclick', 'searchControl2()');
     //cityButton.setAttribute('type', 'submit');
     cityButton.innerHTML = `<button class="saveBtn" id="${cityButtonValue}">${cityButtonValue}</button>`;
-
+    cityButton.addEventListener('click', searchControl2);
     cityButtons.append(cityButton);
-
+    // removeDuplicate();
     // save to localStorage
     var savedCityButtons = localStorage.getItem("saved city buttons");
     var savedCities;
-    
     // if there are no saved scores, create array to save them
     if(savedCityButtons === null) {
       savedCities = [];
@@ -388,5 +388,45 @@ var searchControl2 = function() {
 };
 
 
-eventsButton.addEventListener("click", removeHideClass);
+var loadCityButtons = function() {
+  // removeDuplicate();
+  // savedCitiesContainer.classList.remove('hide');
+  var savedCityButtons = localStorage.getItem("saved city buttons");
+  // console.log(typeof savedCityButtons); // string
 
+  // are there any cities saved in LS?
+  if (savedCityButtons === null) {
+    return;
+  } 
+
+  var savedCityButtonItems = JSON.parse(savedCityButtons);
+  console.log(savedCityButtons + ' are saved city buttons');
+
+
+    for (var i = 0; i < savedCityButtonItems.length; i++) {
+
+    var newCityButton = document.createElement('span');
+    newCityButton.classList = 'saved-city';
+    newCityButton.setAttribute('id', savedCityButtonItems[i].name);
+    newCityButton.innerHTML = `<button class="saveBtn" id="${savedCityButtonItems[i].name}">${savedCityButtonItems[i].name}</button>`;
+    newCityButton.addEventListener('click', searchControl2)
+    cityButtons.append(newCityButton);
+      
+    }
+  
+}
+
+// var removeDuplicate = function() {
+//   var tempCities = [];
+//   var localCities = JSON.parse(localStorage.getItem("saved city buttons"));
+//   // handle duplicates
+//   for (var i = 0; i < localCities.length; i++) {
+//     if (tempCities.includes(localCities[i])) {
+//       return;
+//     };
+//     tempCities.push(localCities[i]);
+//   }
+
+//   localStorage.setItem('saved city buttons', JSON.stringify(tempCities));
+// }
+loadCityButtons();
