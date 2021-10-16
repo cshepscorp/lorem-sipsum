@@ -39,12 +39,12 @@ var loadEventsByCity = function(url, brewUrl) {
       .then(function(response) {
         var responseNum = response.page.totalElements
         if ( responseNum === 0) {
-         var errorText = 'Error: Nothing found';
+        var errorText = 'Error: Nothing found';
 
 
-         modalOpen(errorText);
+        modalOpen(errorText);
 
-         return
+        return
         }
 
         var univContainer = document.querySelector("#event-response-container");
@@ -288,7 +288,7 @@ var searchControl = function() {
 
   // get city value from user input
   var theirSearch = searchTerm.value.trim();
-  
+  var classification = document.getElementById("classification").value;
  
   if (!theirSearch && !searchTerm2) {
     var cityAlertText = 'Please enter a valid city name';
@@ -306,7 +306,8 @@ var searchControl = function() {
 
     loadEventsByCity(tmApiUrl, brewApiUrl);
  
-  } else { 
+  } else if (!theirSearch && searchTerm2) {
+    theirSearch = searchTerm2
     var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&size=40&countryCode=US&city='
       + theirSearch + '&' + tmApi + '&classificationName=' + classification;
 
@@ -353,8 +354,6 @@ var searchControl = function() {
     window.localStorage.setItem("saved city buttons", savedCitiesString)
 
   }
-
-  var classification = document.getElementById("classification").value;
 };
 
 var cityId;
