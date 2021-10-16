@@ -24,6 +24,6 @@ A few ideas that are in the making-
 
 https://cshepscorp.github.io/lorem-sipsum/
 
-![Screenshot of Deployed App](LoremSipsum.jpg)
+![Screenshot of Deployed App](LoremSipsum.PNG)
 
 #### Made with care by Will Brent, Christina Sheppard and Daniel Wilkinson.
