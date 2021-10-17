@@ -14,6 +14,7 @@ var modalAlertEl = document.querySelector('#modal-alert');
 var modalAlertTextEl = document.querySelector('#modal-text');
 var modalCloseButtonEl = document.querySelector('#modal-close-button');
 
+
 // API info
 // var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
 // var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
@@ -31,7 +32,9 @@ var removeHideClass = function() {
 var postalCodeContainer = [];
 
 var loadEventsByCity = function(url, brewUrl) {
+  console.log('after')
   removeHideClass();
+  console.log('before');
   fetch(url)  
       .then(function(response) {
          return response.json();
@@ -50,6 +53,8 @@ var loadEventsByCity = function(url, brewUrl) {
 
         var univContainer = document.querySelector("#event-response-container");
         univContainer.innerHTML = '';
+
+        postalCodeContainer = [];
 
         for(var i = 0; i < 12; i++) {
               
@@ -86,7 +91,7 @@ var loadEventsByCity = function(url, brewUrl) {
 
           var univSearchReturnZip = response._embedded.events[i]._embedded.venues[0].postalCode;
           postalCodeContainer.push(univSearchReturnZip);
-
+          
           function findMostFrequent(postalCodeContainer) {
             let mf = 1;
             let m = 0;
@@ -208,12 +213,11 @@ var docuMenuSearch = function(mostCommonZip) {
     }
   })
   .then(response => {
-    console.log(response);
       return response.json();
   })
   .then(function(response) {
 
-    for(var i = 0; i < postalCodeContainer.length; i++) {
+    for(var i = 0; i < 10; i++) {
       var restSearchListItem = document.createElement('div');
       restSearchListItem.classList ="col l12 s12";
       restContainer.append(restSearchListItem);
@@ -286,7 +290,6 @@ var docuMenuSearch = function(mostCommonZip) {
 
 // controlling how search responds with no new city name
 var searchControl = function() {
-
   // get city value from user input
   var theirSearch = searchTerm.value.trim();
   var classification = document.getElementById("classification").value;
@@ -316,6 +319,13 @@ var searchControl = function() {
   
     loadEventsByCity(tmApiUrl, brewApiUrl);
 
+  } else {
+    var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&size=40&countryCode=US&city='
+    + theirSearch + '&' + tmApi + '&classificationName=' + classification;
+
+    var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
+
+    loadEventsByCity(tmApiUrl, brewApiUrl);
   }
 
   if(theirSearch) {
@@ -371,6 +381,9 @@ $(document).on('click','.saveBtn',function(){
 }); 
 
 var searchControl2 = function() {
+
+  cityId = event.target.textContent
+
   console.log('searchcontrol2 id loading')
   // console.log(savedCityButtonValue + ' is the saved city value');
   var theirSearch = cityId;
@@ -396,6 +409,8 @@ var loadCityButtons = function() {
 
   // are there any cities saved in LS?
   if (savedCityButtons === null) {
+    savedCityButtons = [];
+
     return;
   } 
 
@@ -409,7 +424,7 @@ var loadCityButtons = function() {
     newCityButton.classList = 'saved-city';
     newCityButton.setAttribute('id', savedCityButtonItems[i].name);
     newCityButton.innerHTML = `<button class="saveBtn" id="${savedCityButtonItems[i].name}">${savedCityButtonItems[i].name}</button>`;
-    newCityButton.addEventListener('click', searchControl2)
+    // newCityButton.addEventListener('click', searchControl2)
     cityButtons.append(newCityButton);
       
     }
