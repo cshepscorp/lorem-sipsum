@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  #response-container {
+    flex: 3;
+  }
+
+  #event-container {
+    flex: 3;
+  }
+
+  #yelp-container {
+    flex: 3;
+  }

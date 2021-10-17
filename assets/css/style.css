@@ -29,15 +29,27 @@ p {
 .white-text {
   color: #FFF!important;
 }
+
 h3 {
   padding-bottom: 20px;
 }
+
 h5 {
   color: #000;
 }
+
 .nav-new {
   background-color: var(--primary);
 }
+
+#city-buttons {
+  padding-bottom: 6px;
+}
+
+.saved-city {
+  padding-right: 6px;
+}
+
 .bg-image {
   background: url(../images/hero-city-night.png);
   background-color: #000;
@@ -65,25 +77,73 @@ h5 {
   font-size: 12px;
 }
 
-.brew-list {
-  padding: 10px;
-  padding-top:20px;
-  margin-bottom: 6px;
-  margin-right: 10px;
+.brewery-info {
+  font-size: 15px;
+  background-color: rgba(255, 255, 255, 0.75);
+  margin-top: 30px;
+  font-weight: bold;
+  padding-left: 10px;
 }
 
-.brewery-title {
-  font-size: 18px;
-  padding-top:0px
+.american {
+  background-image: url(../images/american.jpg);
 }
 
-.breweries-section {
-  background-color: #ececec;
+.asian {
+  background-image: url(../images/asian.jpg);
 }
+
+.burgers {
+  background-image: url(../images/burgers.jpg);
+}
+
+.chicken {
+  background-image: url(../images/chicken.jpg);
+}
+
+.coffee {
+  background-image: url(../images/coffee.jpg);
+}
+
+.irish {
+  background-image: url(../images/irish.jpg);
+}
+
+.italian {
+  background-image: url(../images/italian.jpg);
+}
+
+.japanese {
+  background-image: url(../images/japanese.jpg);
+}
+
+.mexican {
+  background-image: url(../images/mexican.jpg);
+}
+
+.sandwiches {
+  background-image: url(../images/sandwich.jpg);
+}
+
+.steak {
+  background-image: url(../images/steak.jpg);
+}
+
+.dining-generic {
+  background-image: url(../images/dining-generic.jpg);
+}
+
+.modal-open {
+  display: block;
+  height: 200px;
+  z-index: 9999;
+  text-align: center;
+}
+
 
 @media screen and (max-width:575px) {
   .brew-list {
-    width: 265px;
+    width: 300px;
   }
 
 }
