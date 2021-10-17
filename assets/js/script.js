@@ -14,9 +14,10 @@ var modalAlertEl = document.querySelector('#modal-alert');
 var modalAlertTextEl = document.querySelector('#modal-text');
 var modalCloseButtonEl = document.querySelector('#modal-close-button');
 
+
 // API info
 // var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
-// var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
+var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
 // var dmApi = 'bd8f07fd4ccba45e976bd5aff28bfb08' // Will Api key
 // var dmApi = '0b1da3bd2b6b0219770486baca056a30' // Daniel Api key
 var tmApi = '&apikey=2MALjZsA5tAXCU1xKvJPNTzJVAsqk24J'; // API key ticketmaster CS
@@ -31,7 +32,9 @@ var removeHideClass = function() {
 var postalCodeContainer = [];
 
 var loadEventsByCity = function(url, brewUrl) {
+  console.log('after')
   removeHideClass();
+  console.log('before');
   fetch(url)  
       .then(function(response) {
          return response.json();
@@ -51,42 +54,38 @@ var loadEventsByCity = function(url, brewUrl) {
         var univContainer = document.querySelector("#event-response-container");
         univContainer.innerHTML = '';
 
+        postalCodeContainer = [];
+
         for(var i = 0; i < 12; i++) {
               
 
           var univSearchReturnListContainer = document.createElement('div');
-          univSearchReturnListContainer.classList = "col s12 m12";
-          univContainer.append(univSearchReturnListContainer);
+              univSearchReturnListContainer.classList = "col l12 s12";
+              univContainer.append(univSearchReturnListContainer);
 
-          var univSearchReturnList = document.createElement('div');
-          univSearchReturnList.classList = "card";
-          univSearchReturnList.style.height = '180px';
-          univSearchReturnList.style.maxHeight = '210px';
-          // univSearchReturnList.style.width = '300px';
-          univSearchReturnListContainer.append(univSearchReturnList);
+              var univSearchReturnList = document.createElement('div');
+              univSearchReturnList.classList = "col s12 grey lighten-4 card";
+              univSearchReturnList.style.height = '180px';
+              univSearchReturnList.style.backgroundImage = `url('${response._embedded.events[i].images[3].url}')`;
+              univSearchReturnList.style.backgroundRepeat = 'none';
+              univSearchReturnList.style.backgroundPosition = 'center center';
+              univSearchReturnListContainer.append(univSearchReturnList);
 
-          var univSearchReturnCardDiv = document.createElement('div');
-          univSearchReturnCardDiv.classList = "card-list";
-          univSearchReturnList.append(univSearchReturnCardDiv);
+              // var genre = response._embedded.events[i].classifications[0].genre.name;
+              //var health = response._embedded.events[i].ticketing.healthCheck.summary;
 
-          var univSearchReturnCardContentDiv = document.createElement('div');
-          univSearchReturnCardContentDiv.classList = "card-content";
-          univSearchReturnCardContentDiv.style.backgroundImage = `url('${response._embedded.events[i].images[3].url}')`;
-          univSearchReturnCardContentDiv.style.backgroundRepeat = 'none';
-          univSearchReturnCardContentDiv.style.backgroundPosition = 'center center';
-          
-          univSearchReturnList.append(univSearchReturnCardContentDiv);
+              var univSearchReturnCardContentDiv = document.createElement('p');
+              univSearchReturnCardContentDiv.classList = "brewery-info";
+              univSearchReturnCardContentDiv.innerHTML = response._embedded.events[i].name + `<br />` 
+              + `<span class="font-date">` + response._embedded.events[i].dates.start.localDate + `</span>`
+              //+ `<br />` + `<span class="font-date">Please note: ` + health + `</span>` +
+              + `<br />` + `<span class="font-date">` + response._embedded.events[i]._embedded.venues[0].name + `</span>`;
 
-          var univSearchReturnCardContentP = document.createElement('p');
-          univSearchReturnCardContentP.classList = "card-content";
-          univSearchReturnCardContentP.innerHTML = response._embedded.events[i].name + `<br />` 
-          + `<span class="font-date">` + response._embedded.events[i].dates.start.localDate + `</span>` 
-          + `<br />` + `<span class="font-date">` + response._embedded.events[i]._embedded.venues[0].name + `</span>`;
-          univSearchReturnCardContentDiv.append(univSearchReturnCardContentP);
+              univSearchReturnList.append(univSearchReturnCardContentDiv);
 
           var univSearchReturnZip = response._embedded.events[i]._embedded.venues[0].postalCode;
           postalCodeContainer.push(univSearchReturnZip);
-
+          
           function findMostFrequent(postalCodeContainer) {
             let mf = 1;
             let m = 0;
@@ -128,7 +127,7 @@ var loadEventsByCity = function(url, brewUrl) {
       // Documenu stuff
         docuMenuSearch(mostCommonZip);
     
-      theirSearch.value = '';
+      // theirSearch.value = '';
   })
     
 };
@@ -208,12 +207,11 @@ var docuMenuSearch = function(mostCommonZip) {
     }
   })
   .then(response => {
-    console.log(response);
       return response.json();
   })
   .then(function(response) {
 
-    for(var i = 0; i < postalCodeContainer.length; i++) {
+    for(var i = 0; i < 10; i++) {
       var restSearchListItem = document.createElement('div');
       restSearchListItem.classList ="col l12 s12";
       restContainer.append(restSearchListItem);
@@ -286,7 +284,6 @@ var docuMenuSearch = function(mostCommonZip) {
 
 // controlling how search responds with no new city name
 var searchControl = function() {
-
   // get city value from user input
   var theirSearch = searchTerm.value.trim();
   var classification = document.getElementById("classification").value;
@@ -316,6 +313,13 @@ var searchControl = function() {
   
     loadEventsByCity(tmApiUrl, brewApiUrl);
 
+  } else {
+    var tmApiUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?sort=date,asc&size=40&countryCode=US&city='
+    + theirSearch + '&' + tmApi + '&classificationName=' + classification;
+
+    var brewApiUrl = 'https://api.openbrewerydb.org/breweries/search?query=' + theirSearch;
+
+    loadEventsByCity(tmApiUrl, brewApiUrl);
   }
 
   if(theirSearch) {
@@ -371,6 +375,9 @@ $(document).on('click','.saveBtn',function(){
 }); 
 
 var searchControl2 = function() {
+
+  cityId = event.target.textContent
+
   console.log('searchcontrol2 id loading')
   // console.log(savedCityButtonValue + ' is the saved city value');
   var theirSearch = cityId;
@@ -396,6 +403,8 @@ var loadCityButtons = function() {
 
   // are there any cities saved in LS?
   if (savedCityButtons === null) {
+    savedCityButtons = [];
+
     return;
   } 
 
@@ -409,7 +418,7 @@ var loadCityButtons = function() {
     newCityButton.classList = 'saved-city';
     newCityButton.setAttribute('id', savedCityButtonItems[i].name);
     newCityButton.innerHTML = `<button class="saveBtn" id="${savedCityButtonItems[i].name}">${savedCityButtonItems[i].name}</button>`;
-    newCityButton.addEventListener('click', searchControl2)
+    // newCityButton.addEventListener('click', searchControl2)
     cityButtons.append(newCityButton);
       
     }
