@@ -17,7 +17,7 @@ var modalCloseButtonEl = document.querySelector('#modal-close-button');
 
 // API info
 // var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
-// var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
+var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
 // var dmApi = 'bd8f07fd4ccba45e976bd5aff28bfb08' // Will Api key
 // var dmApi = '0b1da3bd2b6b0219770486baca056a30' // Daniel Api key
 var tmApi = '&apikey=2MALjZsA5tAXCU1xKvJPNTzJVAsqk24J'; // API key ticketmaster CS
@@ -60,34 +60,28 @@ var loadEventsByCity = function(url, brewUrl) {
               
 
           var univSearchReturnListContainer = document.createElement('div');
-          univSearchReturnListContainer.classList = "col s12 m12";
-          univContainer.append(univSearchReturnListContainer);
+              univSearchReturnListContainer.classList = "col l12 s12";
+              univContainer.append(univSearchReturnListContainer);
 
-          var univSearchReturnList = document.createElement('div');
-          univSearchReturnList.classList = "card";
-          univSearchReturnList.style.height = '180px';
-          univSearchReturnList.style.maxHeight = '210px';
-          // univSearchReturnList.style.width = '300px';
-          univSearchReturnListContainer.append(univSearchReturnList);
+              var univSearchReturnList = document.createElement('div');
+              univSearchReturnList.classList = "col s12 grey lighten-4 card";
+              univSearchReturnList.style.height = '180px';
+              univSearchReturnList.style.backgroundImage = `url('${response._embedded.events[i].images[3].url}')`;
+              univSearchReturnList.style.backgroundRepeat = 'none';
+              univSearchReturnList.style.backgroundPosition = 'center center';
+              univSearchReturnListContainer.append(univSearchReturnList);
 
-          var univSearchReturnCardDiv = document.createElement('div');
-          univSearchReturnCardDiv.classList = "card-list";
-          univSearchReturnList.append(univSearchReturnCardDiv);
+              // var genre = response._embedded.events[i].classifications[0].genre.name;
+              //var health = response._embedded.events[i].ticketing.healthCheck.summary;
 
-          var univSearchReturnCardContentDiv = document.createElement('div');
-          univSearchReturnCardContentDiv.classList = "card-content";
-          univSearchReturnCardContentDiv.style.backgroundImage = `url('${response._embedded.events[i].images[3].url}')`;
-          univSearchReturnCardContentDiv.style.backgroundRepeat = 'none';
-          univSearchReturnCardContentDiv.style.backgroundPosition = 'center center';
-          
-          univSearchReturnList.append(univSearchReturnCardContentDiv);
+              var univSearchReturnCardContentDiv = document.createElement('p');
+              univSearchReturnCardContentDiv.classList = "brewery-info";
+              univSearchReturnCardContentDiv.innerHTML = response._embedded.events[i].name + `<br />` 
+              + `<span class="font-date">` + response._embedded.events[i].dates.start.localDate + `</span>`
+              //+ `<br />` + `<span class="font-date">Please note: ` + health + `</span>` +
+              + `<br />` + `<span class="font-date">` + response._embedded.events[i]._embedded.venues[0].name + `</span>`;
 
-          var univSearchReturnCardContentP = document.createElement('p');
-          univSearchReturnCardContentP.classList = "card-content";
-          univSearchReturnCardContentP.innerHTML = response._embedded.events[i].name + `<br />` 
-          + `<span class="font-date">` + response._embedded.events[i].dates.start.localDate + `</span>` 
-          + `<br />` + `<span class="font-date">` + response._embedded.events[i]._embedded.venues[0].name + `</span>`;
-          univSearchReturnCardContentDiv.append(univSearchReturnCardContentP);
+              univSearchReturnList.append(univSearchReturnCardContentDiv);
 
           var univSearchReturnZip = response._embedded.events[i]._embedded.venues[0].postalCode;
           postalCodeContainer.push(univSearchReturnZip);
@@ -133,7 +127,7 @@ var loadEventsByCity = function(url, brewUrl) {
       // Documenu stuff
         docuMenuSearch(mostCommonZip);
     
-      theirSearch.value = '';
+      // theirSearch.value = '';
   })
     
 };
