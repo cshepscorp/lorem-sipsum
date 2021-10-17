@@ -17,7 +17,7 @@ var modalCloseButtonEl = document.querySelector('#modal-close-button');
 
 // API info
 // var dmApi = 'af775405a6cd37426f68ef95546e5d7c'; // personal google CS
-var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
+// var dmApi = 'dacfd831a78aff5dfb256d77a9bbcb3c'; // work email CS
 // var dmApi = 'bd8f07fd4ccba45e976bd5aff28bfb08' // Will Api key
 // var dmApi = '0b1da3bd2b6b0219770486baca056a30' // Daniel Api key
 var tmApi = '&apikey=2MALjZsA5tAXCU1xKvJPNTzJVAsqk24J'; // API key ticketmaster CS
@@ -71,9 +71,6 @@ var loadEventsByCity = function(url, brewUrl) {
               univSearchReturnList.style.backgroundPosition = 'center center';
               univSearchReturnListContainer.append(univSearchReturnList);
 
-              // var genre = response._embedded.events[i].classifications[0].genre.name;
-              //var health = response._embedded.events[i].ticketing.healthCheck.summary;
-
               var univSearchReturnCardContentDiv = document.createElement('p');
               univSearchReturnCardContentDiv.classList = "brewery-info";
               univSearchReturnCardContentDiv.innerHTML = response._embedded.events[i].name + `<br />` 
@@ -108,16 +105,12 @@ var loadEventsByCity = function(url, brewUrl) {
           }
           
           var mostCommonZip = findMostFrequent(postalCodeContainer); 
-          console.log(mostCommonZip + ' is the most common zip');
+          //console.log(mostCommonZip + ' is the most common zip');
 
-          var univSearchReturnCardActionDiv = document.createElement('div');
-          univSearchReturnCardActionDiv.classList = "card-action";
-          univSearchReturnList.append(univSearchReturnCardActionDiv);
-
-          var univSearchReturnCardActionLink = document.createElement('a');
-          // univSearchReturnCardActionLink.classList = "card-content";
-          univSearchReturnCardActionLink.innerHTML = `<a href="${response._embedded.events[i].url}" target="_blank">Event Link</a>`;
-          univSearchReturnCardActionDiv.append(univSearchReturnCardActionLink);
+          var univSearchReturnCardActionLink = document.createElement('button');
+              univSearchReturnCardActionLink.classList = "btn";
+              univSearchReturnCardActionLink.innerHTML = `<a href="${response._embedded.events[i].url}" target="_blank" style="font-size:12px; color: white">Visit Website</a>`;
+              univSearchReturnList.append(univSearchReturnCardActionLink);
 
           searchTerm.value = '';
         };
@@ -126,8 +119,7 @@ var loadEventsByCity = function(url, brewUrl) {
 
       // Documenu stuff
         docuMenuSearch(mostCommonZip);
-    
-      // theirSearch.value = '';
+
   })
     
 };
