@@ -4,7 +4,7 @@ A quick and easy way to find something to do around town
 ## What it is.
 Lorem Sipsum provides one place to find an event in your area as well as nearby Restaraunts and Breweries to give you options to set up the perfect night out'
 
-## How to us it.
+## How to use it.
 Simply input your desired location, whether it be where you live or somewhere you are visiting, and pick the kind of event you are interested. You will be met with a number of options to pick from in the desired area and links to tickets, menus, and locations.
 
 ## How it works.
